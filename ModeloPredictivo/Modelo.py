@@ -1,4 +1,5 @@
 import tensorflow as tf
+import matplotlib.pyplot as plt
 from keras.applications import VGG16, VGG19, ResNet50, InceptionV3, InceptionResNetV2
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
@@ -82,12 +83,24 @@ model.compile(loss='binary_crossentropy',
 
 
 # Agregar flujes de entrenamiento y prueba al modelo e inciar el entrenamiento
-model.fit_generator(
+historia = model.fit_generator(
     generator=train_flow,
     steps_per_epoch=train_images//batch_size,
     epochs=epochs,
     validation_data=test_flow,
     validation_steps=test_images//batch_size)
+
     
 # Guardar los pesos de los parametros resultantes del entrenamiento
-model.save_weigths("Pesos_1.h5")
+model.save_weigths("Pesos.h5")
+
+# Imprimir la historia del entrenamiento con matplotlib.pyplot
+periodos = range(len(epochs)) #construir x1 y x2
+precision_entrenamiento = historia.history['acc'] # recuperar y1
+precision_validacion = historia.history['val_acc'] # recuperar y2
+plt.plot(periodos, precision_entrenamiento, 'b', label='Precisión entrenamiento:' + str(precision_entrenamiento[epochs-1]))
+plt.plot(periodos, precision_validacion, 'r', label='Precisión validación:' + str(precision_validacion[epochs-1]))
+plt.title('Precisión sobre los datos de entrenamiento y validación')
+plt.legend()
+#plt.figure() 
+plt.show()
