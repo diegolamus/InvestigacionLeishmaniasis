@@ -1,4 +1,4 @@
-import tensorflow as tf
+﻿import tensorflow as tf
 import matplotlib.pyplot as plt
 from keras.applications import VGG16, VGG19, ResNet50, InceptionV3, InceptionResNetV2
 from keras.models import Sequential
@@ -8,16 +8,17 @@ from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_a
 
 # Parametros de la carga de datos
 batch_size = 16
-imgage_size = 300
-train_directory = 'data/train'
-test_directory = 'data/validation'
-train_images = 1200
-test_images = 200
+imgage_size = 500
+train_directory = 'datos/entrenamiento'
+test_directory = 'data/prueba'
+train_images = 928
+test_images = 233
 class_mode = 'binary'
 
 # Hiper Parametros entrenamiento
-epochs = 50
+epochs = 500
 conv_trainable_layers =0
+guardar_como= 'Prueba_VGG16' #Con que nombre se van a aguardar los pesos y exportar la historia
 
 # Generador de datos para transformar y redimensionar las imagenes de entrenamiento existentes
 # Salida: 4 posibles transformaciones de la imagen original
@@ -53,7 +54,7 @@ test_flow = test_datagen.flow_from_directory(
 # Cargar modelo pre-entrenado (Transfer Learning). Solo se carga uno.
 #conv_layers = VGG16(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
 #conv_layers = VGG19(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
-conv_layers = ResNet50(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
+#conv_layers = ResNet50(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
 #conv_layers = InceptionV3(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
 #conv_layers = InceptionResNetV2(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
 
@@ -90,17 +91,15 @@ historia = model.fit_generator(
     validation_data=test_flow,
     validation_steps=test_images//batch_size)
 
-    
 # Guardar los pesos de los parametros resultantes del entrenamiento
-model.save_weigths("Pesos.h5")
+model.save_weigths('pesosEntrenamiento/'+guardar_como+'.h5")
 
-# Imprimir la historia del entrenamiento con matplotlib.pyplot
-periodos = range(len(epochs)) #construir x1 y x2
-precision_entrenamiento = historia.history['acc'] # recuperar y1
-precision_validacion = historia.history['val_acc'] # recuperar y2
-plt.plot(periodos, precision_entrenamiento, 'b', label='Precisión entrenamiento:' + str(precision_entrenamiento[epochs-1]))
-plt.plot(periodos, precision_validacion, 'r', label='Precisión validación:' + str(precision_validacion[epochs-1]))
-plt.title('Precisión sobre los datos de entrenamiento y validación')
-plt.legend()
-#plt.figure() 
-plt.show()
+# Exportar los pesos a un archivo de texto
+precision_entrenamiento = historia.history['acc'] # recuperar precision datos de entrenamiento
+precision_validacion = historia.history['val_acc'] # recuperar precision datos de prueba
+archivo = open('historia/'+guardar_como+'.txt','w')
+archivo.write('Precisión Entrenamiento,Precisión Prueba')
+for indice in range(0, epochs):
+    archivo.write(str(precision_entrenamiento[indice])+','+str(precision_validacion[indice]))
+archivo.close()
+
