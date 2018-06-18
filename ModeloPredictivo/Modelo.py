@@ -1,6 +1,6 @@
 ﻿import tensorflow as tf
 import matplotlib.pyplot as plt
-from keras.applications import VGG16, VGG19, ResNet50, InceptionV3, InceptionResNetV2
+from keras.applications import Xception, VGG16, VGG19, ResNet50, InceptionV3, InceptionResNetV2, MobileNet, MobileNetV2, DenseNet121, NASNetLarge
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
@@ -20,86 +20,113 @@ epochs = 500
 conv_trainable_layers =0
 guardar_como= 'Prueba_VGG16' #Con que nombre se van a aguardar los pesos y exportar la historia
 
-# Generador de datos para transformar y redimensionar las imagenes de entrenamiento existentes
-# Salida: 4 posibles transformaciones de la imagen original
-#         (original, rotación horizontal, rotación vertical, rotación horizontal + vertical)
-#         redimensionadas a 1./255
-train_datagen = ImageDataGenerator(
-    rescale=1./255,
-    horizontal_flip=True,
-    vertical_flip=True)
+def construir_modelo():
+    # Cargar modelo pre-entrenado (Transfer Learning). Solo se carga uno.
+    conv_layers = Xception(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
+    #conv_layers = VGG16(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
+    #conv_layers = VGG19(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
+    #conv_layers = ResNet50(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
+    #conv_layers = InceptionV3(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
+    #conv_layers = InceptionResNetV2(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
+    #conv_layers = MobileNet(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
+    #conv_layers = MobileNetV2(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
+    #conv_layers = DenseNet121(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
+    #conv_layers = NASNetLarge(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
 
-# Generador de datos para redimensionar las imagenes de prueba
-# Salida: imagenes de prueba redimensionadas a 1./255
-test_datagen = ImageDataGenerator(rescale=1./255)
+    # Congelar las capas que no se quieren entrenar
+    for layer in conv_layers.layers[:-conv_trainable_layers]:
+        layer.trainable = False
 
-# flujo de datos de entrenamiento
-# Salida: lotes de imagenes transformadas mediante train_datagen con etiquetas
-#         correspondientes al nombre de su subfolder ubicado en train_directory (positivo, negativo).
-train_flow = train_datagen.flow_from_directory(
-    directory=train_directory,  
-    target_size=(imgage_size, imgage_size),  
-    batch_size=batch_size,
-    class_mode=class_mode)
+    #Imprimir las capas que se van a entrenar
+    for layer in conv_layers.layers:
+        print(layer, layer.trainable)
+    
+    # Crear modelo usando keras
+    modelo = Sequential()
+    modelo.add(conv_layers) # Se agrega el modelo pre cargado al actual
+    modelo.add(layers.Flatten())
+    modelo.add(layers.Dense(1024, activation='relu'))
+    modelo.add(layers.Dropout(0.5))
+    modelo.add(Dense(1, activation='sigmoid'))
+    return model
 
-# flujo de datos de prueba
-# Salida: lotes de imagenes redimensionadas mediante test_datagen con etiquetas
-#         correspondientes al nombre de su subfolder ubicado en train_directory (positivo, negativo).
-test_flow = test_datagen.flow_from_directory(
+def entrenar_modelo(modelo):
+    # Generador de datos para transformar y redimensionar las imagenes de entrenamiento existentes
+    # Salida: 4 posibles transformaciones de la imagen original
+    #         (original, rotación horizontal, rotación vertical, rotación horizontal + vertical)
+    #         redimensionadas a 1./255
+    train_datagen = ImageDataGenerator(
+        rescale=1./255,
+        horizontal_flip=True,
+        vertical_flip=True)
+
+    # Generador de datos para redimensionar las imagenes de prueba
+    # Salida: imagenes de prueba redimensionadas a 1./255
+    test_datagen = ImageDataGenerator(rescale=1./255)
+
+    # flujo de datos de entrenamiento
+    # Salida: lotes de imagenes transformadas mediante train_datagen con etiquetas
+    #         correspondientes al nombre de su subfolder ubicado en train_directory (positivo, negativo).
+    train_flow = train_datagen.flow_from_directory(
+        directory=train_directory,  
+        target_size=(imgage_size, imgage_size),  
+        batch_size=batch_size,
+        class_mode=class_mode)
+
+    # flujo de datos de prueba
+    # Salida: lotes de imagenes redimensionadas mediante test_datagen con etiquetas
+    #         correspondientes al nombre de su subfolder ubicado en train_directory (positivo, negativo).
+    test_flow = test_datagen.flow_from_directory(
         directory=test_directory,
         target_size=(imgage_size, imgage_size),
         batch_size=batch_size,
         class_mode=class_mode)
-
-# Cargar modelo pre-entrenado (Transfer Learning). Solo se carga uno.
-#conv_layers = VGG16(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
-#conv_layers = VGG19(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
-#conv_layers = ResNet50(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
-#conv_layers = InceptionV3(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
-#conv_layers = InceptionResNetV2(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
-
-# Congelar las capas que no se quieren entrenar
-for layer in conv_layers.layers[:-conv_trainable_layers]:
-    layer.trainable = False
-
-#Imprimir las capas que se van a entrenar
-for layer in conv_layers.layers:
-    print(layer, layer.trainable)
     
-# Crear modelo usando keras
-model = Sequential()
-model.add(conv_layers) # Se agrega el modelo pre cargado al actual
-model.add(layers.Flatten())
-model.add(layers.Dense(1024, activation='relu'))
-model.add(layers.Dropout(0.5))
-model.add(Dense(1, activation='sigmoid'))
+    # Compilar modelo
+    # Parametros
+    #   funcion de perdida = binary_crossentropy [ y*log(y') + (1-y)*log(1-y') ] y=etuiqueta, y'=predición
+    #   optimizador = rmsprop -> tasa de parendizaje adaptativa
+    modelo.compile(
+        loss='binary_crossentropy',
+        optimizer='rmsprop',
+        metrics=['accuracy'])
 
-# Compilar modelo
-# Parametros
-#   funcion de perdida = binary_crossentropy [ y*log(y') + (1-y)*log(1-y') ] y=etuiqueta, y'=predición
-#   optimizador = rmsprop -> tasa de parendizaje adaptativa
-model.compile(loss='binary_crossentropy',
-              optimizer='rmsprop',
-              metrics=['accuracy'])
+    # Agregar flujes de entrenamiento y prueba al modelo e inciar el entrenamiento
+    historia = modelo.fit_generator(
+        generator=train_flow,
+        steps_per_epoch=train_images//batch_size,
+        epochs=epochs,
+        validation_data=test_flow,
+        validation_steps=test_images//batch_size)
+    return historia
 
 
-# Agregar flujes de entrenamiento y prueba al modelo e inciar el entrenamiento
-historia = model.fit_generator(
-    generator=train_flow,
-    steps_per_epoch=train_images//batch_size,
-    epochs=epochs,
-    validation_data=test_flow,
-    validation_steps=test_images//batch_size)
+def exportar(modelo,historia):
+    # Guardar los pesos de los parametros resultantes del entrenamiento
+    modelo.save_weigths('pesosEntrenamiento/'+guardar_como+'.h5')
+    print('pesos exportados')
 
-# Guardar los pesos de los parametros resultantes del entrenamiento
-model.save_weigths('pesosEntrenamiento/'+guardar_como+'.h5")
+    # Exportar la historia a un archivo de texto
+    precision_entrenamiento = historia.history['acc'] # recuperar precision datos de entrenamiento
+    precision_validacion = historia.history['val_acc'] # recuperar precision datos de prueba
+    archivo = open('historia/'+guardar_como+'.txt','w')
+    archivo.write('Precisión Entrenamiento,Precisión Prueba')
+    for indice in range(0, epochs):
+        archivo.write(str(precision_entrenamiento[indice])+','+str(precision_validacion[indice]))
+    archivo.close()
+    print('historia exportada')
 
-# Exportar los pesos a un archivo de texto
-precision_entrenamiento = historia.history['acc'] # recuperar precision datos de entrenamiento
-precision_validacion = historia.history['val_acc'] # recuperar precision datos de prueba
-archivo = open('historia/'+guardar_como+'.txt','w')
-archivo.write('Precisión Entrenamiento,Precisión Prueba')
-for indice in range(0, epochs):
-    archivo.write(str(precision_entrenamiento[indice])+','+str(precision_validacion[indice]))
-archivo.close()
+    #Exportar el archivo a .db (Archivo usable desde proyecto java)
+    #TODO
+
+
+def main():
+    modelo = construir_modelo()
+    historia = entrenar_modelo(modelo)
+    exportar(modelo,historia)
+
+
+if __name__ == '__main__':
+    main()
+
 
