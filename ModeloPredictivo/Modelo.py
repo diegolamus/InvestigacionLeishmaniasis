@@ -9,8 +9,8 @@ from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_a
 # Parametros de la carga de datos
 batch_size = 16
 imgage_size = 500
-train_directory = 'datos/entrenamiento'
-test_directory = 'data/prueba'
+train_directory = 'RGB/datos/entrenamiento'
+test_directory = 'RGB/data/prueba'
 train_images = 928
 test_images = 233
 class_mode = 'binary'
@@ -103,13 +103,13 @@ def entrenar_modelo(modelo):
 
 def exportar(modelo,historia):
     # Guardar los pesos de los parametros resultantes del entrenamiento
-    modelo.save_weigths('pesosEntrenamiento/'+guardar_como+'.h5')
+    modelo.save_weigths('RGB/pesosEntrenamiento/'+guardar_como+'.h5')
     print('pesos exportados')
 
     # Exportar la historia a un archivo de texto
     precision_entrenamiento = historia.history['acc'] # recuperar precision datos de entrenamiento
     precision_validacion = historia.history['val_acc'] # recuperar precision datos de prueba
-    archivo = open('historia/'+guardar_como+'.txt','w')
+    archivo = open('RGB/historia/'+guardar_como+'.txt','w')
     archivo.write('Precisión Entrenamiento,Precisión Prueba')
     for indice in range(0, epochs):
         archivo.write(str(precision_entrenamiento[indice])+','+str(precision_validacion[indice]))
