@@ -1,6 +1,5 @@
 ﻿import tensorflow as tf
-import matplotlib.pyplot as plt
-from keras.applications import Xception, VGG16, VGG19, ResNet50, InceptionV3, InceptionResNetV2, MobileNet, MobileNetV2, DenseNet121, NASNetLarge
+from keras.applications import Xception#, VGG16, VGG19, ResNet50, InceptionV3, InceptionResNetV2, MobileNet, DenseNet121, NASNetLarge
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
@@ -8,17 +7,17 @@ from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_a
 
 # Parametros de la carga de datos
 batch_size = 16
-imgage_size = 500
+imgage_size = 300
 train_directory = 'RGB/datos/entrenamiento'
 test_directory = 'RGB/data/prueba'
-train_images = 928
-test_images = 233
+train_images = 889
+test_images = 223
 class_mode = 'binary'
 
 # Hiper Parametros entrenamiento
 epochs = 500
 conv_trainable_layers =0
-guardar_como= 'Prueba_VGG16' #Con que nombre se van a aguardar los pesos y exportar la historia
+guardar_como= 'Prueba_Xception' #Con que nombre se van a aguardar los pesos y exportar la historia
 
 def construir_modelo():
     # Cargar modelo pre-entrenado (Transfer Learning). Solo se carga uno.
@@ -29,7 +28,6 @@ def construir_modelo():
     #conv_layers = InceptionV3(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
     #conv_layers = InceptionResNetV2(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
     #conv_layers = MobileNet(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
-    #conv_layers = MobileNetV2(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
     #conv_layers = DenseNet121(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
     #conv_layers = NASNetLarge(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
 
