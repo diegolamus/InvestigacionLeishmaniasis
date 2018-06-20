@@ -6,7 +6,7 @@ Esta carpeta contiene el modelo predictivo que será usado en la herramienta no 
 
 Los datos para desarrollar el modelo en cuestión fueron proporcionados por el centro internacional de entrenamiento e investigación medica (CIDEIM). Los datos consisten en un conjunto de imágenes de los casos reportados, los cuales están clasificados en verdaderos positivos, verdaderos negativos e indeterminados. Para utlizar estos datos se realizó una preparación previa de los mismos eliminando datos repetidos e inconsistentes, reclasificando imagenes mal clasificadas y segmentando las lesiones de las imagenes.  
   
-El resultado de la preparación de los datos fue un DataSet compuesto por 1013 imagenes de casos positivos y 148 imagenes de casos negativos. Los datos no serán publicados por cuestiones éticas. Para entrenar el modelo se dividen los datos en dos conjuntos, uno de entrenamiento y otro de validación, los cuales contienen el 80% (810 pisitivos - 118 negativos) y el 20% (203 positivos - 30 negativos) de los datos respectivamente.
+El resultado de la preparación de los datos fue un DataSet compuesto por 964 imagenes de casos positivos y 148 imagenes de casos negativos. Los datos no serán publicados por cuestiones éticas. Para entrenar el modelo se dividen los datos en dos conjuntos, uno de entrenamiento y otro de validación, los cuales contienen el 80% (771 pisitivos - 118 negativos) y el 20% (193 positivos - 30 negativos) de los datos respectivamente.
 
 ## Requisitos del sistema
 
