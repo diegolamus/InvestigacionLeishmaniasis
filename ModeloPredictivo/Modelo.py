@@ -1,5 +1,5 @@
 ﻿import tensorflow as tf
-from keras.applications import Xception#, VGG16, VGG19, ResNet50, InceptionV3, InceptionResNetV2, MobileNet, DenseNet121, NASNetLarge
+from keras.applications import Xception, VGG16, VGG19, ResNet50, InceptionV3, InceptionResNetV2, MobileNet, DenseNet121
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
@@ -9,14 +9,13 @@ from keras.preprocessing.image import ImageDataGenerator, array_to_img, img_to_a
 batch_size = 16
 imgage_size = 300
 train_directory = 'RGB/datos/entrenamiento'
-test_directory = 'RGB/data/prueba'
+test_directory = 'RGB/datos/prueba'
 train_images = 889
 test_images = 223
 class_mode = 'binary'
 
-# Hiper Parametros entrenamiento
-epochs = 500
-conv_trainable_layers =0
+# HiperParametros entrenamiento
+epochs = 1
 guardar_como= 'Prueba_Xception' #Con que nombre se van a aguardar los pesos y exportar la historia
 
 def construir_modelo():
@@ -29,24 +28,23 @@ def construir_modelo():
     #conv_layers = InceptionResNetV2(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
     #conv_layers = MobileNet(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
     #conv_layers = DenseNet121(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
-    #conv_layers = NASNetLarge(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
 
     # Congelar las capas que no se quieren entrenar
-    for layer in conv_layers.layers[:-conv_trainable_layers]:
+    for layer in conv_layers.layers[:]:
         layer.trainable = False
 
-    #Imprimir las capas que se van a entrenar
+    # Imprimir las capas que se van a entrenar
     for layer in conv_layers.layers:
         print(layer, layer.trainable)
     
     # Crear modelo usando keras
     modelo = Sequential()
-    modelo.add(conv_layers) # Se agrega el modelo pre cargado al actual
-    modelo.add(layers.Flatten())
-    modelo.add(layers.Dense(1024, activation='relu'))
-    modelo.add(layers.Dropout(0.5))
+    modelo.add(conv_layers) # Se agrega el modelo pre-cargado al actual
+    modelo.add(Flatten())
+    modelo.add(Dense(1024, activation='relu'))
+    modelo.add(Dropout(0.5))
     modelo.add(Dense(1, activation='sigmoid'))
-    return model
+    return modelo
 
 def entrenar_modelo(modelo):
     # Generador de datos para transformar y redimensionar las imagenes de entrenamiento existentes
@@ -101,7 +99,7 @@ def entrenar_modelo(modelo):
 
 def exportar(modelo,historia):
     # Guardar los pesos de los parametros resultantes del entrenamiento
-    modelo.save_weigths('RGB/pesosEntrenamiento/'+guardar_como+'.h5')
+    modelo.save_weights('RGB/pesosEntrenamiento/'+guardar_como+'.h5')
     print('pesos exportados')
 
     # Exportar la historia a un archivo de texto
