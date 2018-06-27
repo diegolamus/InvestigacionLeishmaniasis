@@ -1,12 +1,14 @@
 package co.edu.icesi.leishmaniasisapp;
 
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,8 @@ public class TomarFoto extends AppCompatActivity {
     Camera camera;
     FrameLayout layoutCamera;
     MostrarCamara mostrarCamara;
+    Button flash;
+    Boolean flashEncendido;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -27,6 +31,7 @@ public class TomarFoto extends AppCompatActivity {
         setContentView(R.layout.activity_tomar_foto);
         layoutCamera = findViewById(R.id.layoutCamera);
         camera = Camera.open();
+        flash = (Button) findViewById(R.id.flash);
         mostrarCamara = new MostrarCamara(this, camera);
         mostrarCamara.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -38,22 +43,54 @@ public class TomarFoto extends AppCompatActivity {
             }
         });
         layoutCamera.addView(mostrarCamara);
+        flashEncendido=false;
     }
 
+    //Tomar foto
     public void onClick_tomarFoto(View v) {
-        //Tomar la foto
         if (camera != null) {
             camera.takePicture(null, null, pictureCallBack);
         }
     }
 
-    //Recuperar y guardar la foto
+    //Recuperar la foto que se tomo y guardarla
     Camera.PictureCallback pictureCallBack = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] bytes, Camera camera) {
             //TODO convertir bytes a foto y enviar a resultados
         }
     };
+
+    //Activar y desactivar flash
+    public void activarFlash(View v){
+        if(flashEncendido) {
+            flash.setBackground(getResources().getDrawable(R.mipmap.flash_off_round));
+            apagarFlash();
+            flashEncendido=false;
+        }else{
+            flash.setBackground(getResources().getDrawable(R.mipmap.flash_on_round));
+            encenderFlash();
+            flashEncendido=true;
+        }
+    }
+    private void encenderFlash(){
+        if(this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
+            camera.stopPreview();
+            Camera.Parameters p = camera.getParameters();
+            p.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+            camera.setParameters(p);
+            camera.startPreview();
+        }
+    }
+    private void apagarFlash(){
+        if(this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
+            camera.stopPreview();
+            Camera.Parameters p = camera.getParameters();
+            p.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+            camera.setParameters(p);
+            camera.startPreview();
+        }
+    }
 
     //Enfocar
     private void focusOnTouch(MotionEvent motionEvent) {
