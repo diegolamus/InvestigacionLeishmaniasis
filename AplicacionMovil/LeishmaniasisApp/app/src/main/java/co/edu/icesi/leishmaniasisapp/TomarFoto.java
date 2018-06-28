@@ -18,6 +18,7 @@ import java.util.List;
 public class TomarFoto extends AppCompatActivity {
 
     private static final int FOCUS_AREA_SIZE = 300;
+    public static byte[] img;
 
     Camera camera;
     FrameLayout layoutCamera;
@@ -53,21 +54,20 @@ public class TomarFoto extends AppCompatActivity {
             camera.takePicture(null, null, pictureCallBack);
         }
     }
-
-    //Recuperar la foto que se tomo y guardarla
-    Camera.PictureCallback pictureCallBack = new Camera.PictureCallback() {
+    Camera.PictureCallback pictureCallBack= new Camera.PictureCallback() {
         @Override
+        //Recuperar la foto que se tomo y guardarla
         public void onPictureTaken(byte[] bytes, Camera camera) {
-            byte[] img = bytes;
+            img = bytes;
             //TODO aplicar mascara a bytes
             //Cambiar de pantalla y agregar imagen a intent
             Intent intent = new Intent(TomarFoto.this, MostrarResultados.class);
-            intent.putExtra("imagen", img);
+            intent.putExtra("actividad","tomarfoto");
             startActivity(intent);
         }
     };
 
-    //Activar y desactivar flash
+    //Activar y desactivar flash-------------------------------
     public void activarFlash(View v){
         if(flashEncendido) {
             flash.setBackground(getResources().getDrawable(R.mipmap.flash_off_round));
@@ -98,7 +98,7 @@ public class TomarFoto extends AppCompatActivity {
         }
     }
 
-    //Enfocar
+    //Enfocar--------------------------------------------------
     private void focusOnTouch(MotionEvent motionEvent) {
         if (camera != null) {
             camera.cancelAutoFocus();

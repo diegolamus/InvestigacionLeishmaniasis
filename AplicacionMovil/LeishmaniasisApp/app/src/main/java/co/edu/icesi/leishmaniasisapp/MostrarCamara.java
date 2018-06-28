@@ -35,10 +35,11 @@ public class MostrarCamara extends SurfaceView implements SurfaceHolder.Callback
         //Establecer la maxima resolucion
         List<Camera.Size> sizes = params.getSupportedPictureSizes();
         Camera.Size max = null;
-        for (Camera.Size size : sizes)
-            max = size;
-        if (max != null)
-            params.setPictureSize(max.width, max.height);
+        for (Camera.Size size : sizes) {
+            if(max==null||max.height<size.height) {
+                max = size;
+            }
+        }
         //Cambiar la orientacion de la camara
         if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
             params.set("orientation", "portrait");
@@ -50,7 +51,10 @@ public class MostrarCamara extends SurfaceView implements SurfaceHolder.Callback
             params.setRotation(0);
         }
         //Establecer parametros
+        if (max != null)
+            params.setPictureSize(max.width, max.height);
         camera.setParameters(params);
+        //Iniciar preview
         try {
             camera.setPreviewDisplay(holder);
             camera.startPreview();
