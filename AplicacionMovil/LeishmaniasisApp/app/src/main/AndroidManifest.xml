@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="co.edu.icesi.leishmaniasisapp">
 
-    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
-    <uses-permission android:name="android.permission.FLASHLIGHT"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -22,7 +20,8 @@
         </activity>
         <activity android:name=".Instrucciones" />
         <activity android:name=".TomarFoto" />
-        <activity android:name=".SeleccionarFoto"></activity>
+        <activity android:name=".SeleccionarFoto" />
+        <activity android:name=".MostrarResultados"></activity>
     </application>
 
 </manifest>

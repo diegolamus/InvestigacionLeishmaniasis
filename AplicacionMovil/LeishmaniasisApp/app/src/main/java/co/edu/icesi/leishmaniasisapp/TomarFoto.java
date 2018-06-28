@@ -1,6 +1,7 @@
 package co.edu.icesi.leishmaniasisapp;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.hardware.Camera;
@@ -31,7 +32,7 @@ public class TomarFoto extends AppCompatActivity {
         setContentView(R.layout.activity_tomar_foto);
         layoutCamera = findViewById(R.id.layoutCamera);
         camera = Camera.open();
-        flash = (Button) findViewById(R.id.flash);
+        flash = findViewById(R.id.flash);
         mostrarCamara = new MostrarCamara(this, camera);
         mostrarCamara.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -57,7 +58,12 @@ public class TomarFoto extends AppCompatActivity {
     Camera.PictureCallback pictureCallBack = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] bytes, Camera camera) {
-            //TODO convertir bytes a foto y enviar a resultados
+            byte[] img = bytes;
+            //TODO aplicar mascara a bytes
+            //Cambiar de pantalla y agregar imagen a intent
+            Intent intent = new Intent(TomarFoto.this, MostrarResultados.class);
+            intent.putExtra("imagen", img);
+            startActivity(intent);
         }
     };
 
