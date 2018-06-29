@@ -10,8 +10,8 @@ batch_size = 16
 imgage_size = 300
 train_directory = 'RGB/datos/entrenamiento'
 test_directory = 'RGB/datos/prueba'
-train_images = 889
-test_images = 223
+train_images = 1581
+test_images = 395
 class_mode = 'binary'
 
 # HiperParametros entrenamiento
