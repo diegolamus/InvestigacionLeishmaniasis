@@ -23,6 +23,6 @@ public class MostrarResultados extends AppCompatActivity {
             img=null; //TODO recuperar foto de SeleccionarFoto
         fotoDisplay = findViewById(R.id.fotoDisplay);
         Bitmap imageMap = BitmapFactory.decodeByteArray(img, 0,img.length);
-        fotoDisplay.setImageBitmap(imageMap);
+        //fotoDisplay.setImageBitmap(imageMap);
     }
 }
