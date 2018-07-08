@@ -64,6 +64,7 @@ public class TomarFoto extends AppCompatActivity {
             Intent intent = new Intent(TomarFoto.this, MostrarResultados.class);
             intent.putExtra("actividad","tomarfoto");
             startActivity(intent);
+            finish();
         }
     };
 

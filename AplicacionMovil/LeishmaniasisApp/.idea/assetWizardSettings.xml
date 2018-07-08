@@ -34,7 +34,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="115" />
+                                                <entry key="scalingPercent" value="69" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -46,11 +46,11 @@
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="backgroundLayerName" value="lc_background" />
-                                      <entry key="foregroundImage" value="C:\Users\Diego Lamus\Desktop\LC-01.png" />
-                                      <entry key="foregroundLayerName" value="lc_foreground" />
-                                      <entry key="outputName" value="lc_icon" />
-                                      <entry key="previewDensity" value="XXXHIGH" />
+                                      <entry key="backgroundLayerName" value="lc2_background" />
+                                      <entry key="foregroundImage" value="C:\Users\Diego Lamus\Desktop\LC-02.png" />
+                                      <entry key="foregroundLayerName" value="lc2_foreground" />
+                                      <entry key="outputName" value="lc_app_icon" />
+                                      <entry key="previewDensity" value="HIGH" />
                                     </map>
                                   </option>
                                 </PersistentState>
