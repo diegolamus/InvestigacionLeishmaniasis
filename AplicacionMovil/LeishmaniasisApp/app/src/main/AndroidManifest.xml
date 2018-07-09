@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -21,7 +22,10 @@
         </activity>
         <activity android:name=".Instrucciones" />
         <activity android:name=".TomarFoto" />
-        <activity android:name=".SeleccionarFoto" />
+        <activity android:name=".AlbumActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".GalleryPreview"
+            android:configChanges="orientation|screenSize"/>
         <activity android:name=".MostrarResultados"></activity>
     </application>
 
