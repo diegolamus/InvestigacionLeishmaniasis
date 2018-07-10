@@ -9,10 +9,10 @@ import android.database.Cursor;
 import android.database.MergeCursor;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,8 +80,8 @@ public class SeleccionarFoto extends AppCompatActivity {
             String album = null;
             String timestamp = null;
             String countPhoto = null;
-            Uri uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-            Uri uriInternal = MediaStore.Images.Media.INTERNAL_CONTENT_URI;
+            Uri uriExternal = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            Uri uriInternal = android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI;
 
 
             String[] projection = { MediaStore.MediaColumns.DATA,
@@ -160,6 +160,8 @@ public class SeleccionarFoto extends AppCompatActivity {
 
     }
 }
+
+
 
 
 class AlbumAdapter extends BaseAdapter {
