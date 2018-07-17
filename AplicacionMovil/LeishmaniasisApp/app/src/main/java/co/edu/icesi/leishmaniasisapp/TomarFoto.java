@@ -1,24 +1,36 @@
 package co.edu.icesi.leishmaniasisapp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+
+import java.io.Console;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import co.edu.icesi.modelo.ProcesamientoImagen;
 
 
 public class TomarFoto extends AppCompatActivity {
 
     private static final int FOCUS_AREA_SIZE = 300;
-    public static byte[] img;
+    public static Bitmap img;
 
     Camera camera;
     FrameLayout layoutCamera;
@@ -58,8 +70,11 @@ public class TomarFoto extends AppCompatActivity {
         @Override
         //Recuperar la foto que se tomo y guardarla
         public void onPictureTaken(byte[] bytes, Camera camera) {
-            img = bytes;
-            //TODO aplicar mascara a bytes
+            Bitmap imageMap = BitmapFactory.decodeByteArray(bytes, 0,bytes.length);
+            if(imageMap.getWidth()> imageMap.getHeight())
+                imageMap = ProcesamientoImagen.rotarImage(imageMap,90);
+            //TODO recortar imagen
+            img=imageMap;
             //Cambiar de pantalla y agregar imagen a intent
             Intent intent = new Intent(TomarFoto.this, MostrarResultados.class);
             intent.putExtra("actividad","tomarfoto");
@@ -155,7 +170,67 @@ public class TomarFoto extends AppCompatActivity {
         return result;
     }
 }
+@SuppressLint("ViewConstructor")
+class MostrarCamara extends SurfaceView implements SurfaceHolder.Callback {
 
+    Camera camera;
+    SurfaceHolder holder;
+
+    public MostrarCamara(Context context, Camera camera) {
+        super(context);
+        this.camera = camera;
+        holder = getHolder();
+        holder.addCallback(this);
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        camera.stopPreview();
+        camera.release();
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        Camera.Parameters params = camera.getParameters();
+        //Establecer la resolucion optima de la camara
+        List<Camera.Size> sizes = params.getSupportedPictureSizes();
+        int max = Integer.MAX_VALUE;
+        Camera.Size preferredSize = null;
+        for (Camera.Size size:sizes) {
+            if (Math.abs(size.width - params.getPreviewSize().width) < max) {
+                preferredSize = size;
+                max=Math.abs(size.width - params.getPreviewSize().width);
+            }
+        }
+        //Cambiar la orientacion de la camara
+        if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_LANDSCAPE) {
+            params.set("orientation", "portrait");
+            camera.setDisplayOrientation(90);
+            params.setRotation(90);
+        } else {
+            params.set("orientation", "landscape");
+            camera.setDisplayOrientation(0);
+            params.setRotation(0);
+        }
+        //Establecer parametros
+        if (preferredSize != null)
+            params.setPictureSize(preferredSize.width, preferredSize.height);
+        camera.setParameters(params);
+        //Iniciar preview
+        try {
+            camera.setPreviewDisplay(holder);
+            camera.startPreview();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+    }
+
+}
 
 
 

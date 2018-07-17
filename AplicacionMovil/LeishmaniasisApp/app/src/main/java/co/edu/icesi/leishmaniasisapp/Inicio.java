@@ -8,34 +8,26 @@ import android.view.View;
 
 public class Inicio extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
     }
 
-
-    public void onClick_Instrucciones(View v){
-        Intent intent= new Intent(Inicio.this,Instrucciones.class);
-        startActivity(intent);
-    }
-
     public void onClick_TomarFoto(View v){
         Intent intent= new Intent(Inicio.this,TomarFoto.class);
         startActivity(intent);
-
-
     }
 
     public void onClick_SeleccionarFoto(View v){
         Intent intent= new Intent(Inicio.this,SeleccionarFoto.class);
         startActivity(intent);
-
-
     }
 
+    public void onClick_Instrucciones(View v){
+        Intent intent = new Intent(Inicio.this, Instrucciones.class);
+        startActivity(intent);
+    }
 
 
 }

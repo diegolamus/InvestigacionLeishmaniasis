@@ -4,8 +4,10 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,10 +16,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import co.edu.icesi.modelo.ProcesamientoImagen;
+
 public class MostrarResultados extends AppCompatActivity {
 
     ImageView fotoDisplay;
-    byte[] img;
+    Bitmap img;
     ProgressBar progressBarProbabilidad;
     TextView textoProbabilidad;
 
@@ -32,13 +40,12 @@ public class MostrarResultados extends AppCompatActivity {
             img=null; //TODO recuperar foto de SeleccionarFoto
         //Desplegar la foto en pantalla
         fotoDisplay = findViewById(R.id.fotoDisplay);
-        Bitmap imageMap = BitmapFactory.decodeByteArray(img, 0,img.length);
-        fotoDisplay.setImageBitmap(imageMap);
+        fotoDisplay.setImageBitmap(img);
         //Ajustar la barra de progreso y texto de probabilidad
         progressBarProbabilidad = findViewById(R.id.progressBar);
         textoProbabilidad = findViewById(R.id.textoProbabilidad);
         //Ingresar probabilidad a barra de progreso y texto
-        double probabilidad = obtenerProbabilidad();
+        double probabilidad = ProcesamientoImagen.obtenerProbabilidad(img);
         progressBarProbabilidad.setProgress((int)probabilidad);
         textoProbabilidad.setText("Probabilidad de infección: "+ Math.round(probabilidad*100)/100.0+ "%");
     }
@@ -52,8 +59,4 @@ public class MostrarResultados extends AppCompatActivity {
         //TODO guadar foto
     }
 
-    private double obtenerProbabilidad(){
-        //TODO obtener predicción
-        return Math.random()*100;
-    }
 }
