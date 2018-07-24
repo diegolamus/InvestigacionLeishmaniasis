@@ -170,6 +170,7 @@ public class TomarFoto extends AppCompatActivity {
         return result;
     }
 }
+
 @SuppressLint("ViewConstructor")
 class MostrarCamara extends SurfaceView implements SurfaceHolder.Callback {
 
