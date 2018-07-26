@@ -47,10 +47,8 @@ public class GalleryPreview extends AppCompatActivity {
 
     public void onClick_Boton2(View v){
         //variable con la imagen
-        Bitmap bit= BitmapFactory.decodeResource(getResources(),R.id.GalleryPreviewImg);
-       // ByteArrayOutputStream temp= new ByteArrayOutputStream();
-//        bit.compress(Bitmap.CompressFormat.PNG,100,temp);
-        recuperaImagen=bit;
+        Bitmap prueba =BitmapFactory.decodeFile(path);
+        recuperaImagen=prueba;
 
         Intent intentRecortar = new Intent(GalleryPreview.this, MostrarResultados.class);
         intentRecortar.putExtra("actividad","seleccionarFoto" );
