@@ -37,7 +37,7 @@ public class MostrarResultados extends AppCompatActivity {
         if(getIntent().getStringExtra("actividad").equals("tomarfoto"))
             img = TomarFoto.img;
         else
-            img=null; //TODO recuperar foto de SeleccionarFoto
+            img=GalleryPreview.recuperaImagen; //TODO recuperar foto de SeleccionarFoto
         //Desplegar la foto en pantalla
         fotoDisplay = findViewById(R.id.fotoDisplay);
         fotoDisplay.setImageBitmap(img);
