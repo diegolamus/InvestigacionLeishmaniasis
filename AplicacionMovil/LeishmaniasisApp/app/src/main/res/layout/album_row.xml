@@ -58,6 +58,5 @@
                     android:ellipsize="end"/>
                 </LinearLayout>
             </RelativeLayout>
-
         </RelativeLayout>
     </android.support.v7.widget.CardView>
