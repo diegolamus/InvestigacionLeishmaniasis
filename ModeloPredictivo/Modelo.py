@@ -1,4 +1,5 @@
 ﻿import tensorflow as tf
+import os
 from keras.applications import Xception, VGG16, VGG19, ResNet50, InceptionV3, InceptionResNetV2, MobileNet, DenseNet121
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
@@ -109,11 +110,10 @@ def exportar(modelo,historia):
     archivo.close()
     print('historia exportada')
 
-    #Exportar modelo a json
-    json_string = modelo.to_json()
-    text_file = open('src/pesosEntrenamiento/MejoresPesos_' + guardar_como+ ' _json','w')
-    text_file.write(json_string)
-    text_file.close()
+    #Exportar modelo a h5
+    modelo.load_weights('src/pesosEntrenamiento/MejoresPesos_' + guardar_como+ '.hdf5')
+    os.remove('src/pesosEntrenamiento/MejoresPesos_' + guardar_como+ '.hdf5')
+    modelo.save('src/pesosEntrenamiento/MejoresPesos_' + guardar_como+ '.h5')
 
 def main():
     modelo = construir_modelo()
