@@ -84,25 +84,25 @@ def entrenar_modelo(modelo):
         optimizer='rmsprop',
         metrics=['accuracy'])
     #Agregar checkpoint para cargar mejores pesos
-    rutaMejoresPesos='src/pesosEntrenamiento/MejoresPesos_' + guardar_como+ '.h5'
+    rutaMejoresPesos='src/pesosEntrenamiento/MejoresPesos_' + guardar_como+ '.hdf5'
     checkpoint = ModelCheckpoint(rutaMejoresPesos, monitor='val_acc', verbose=1, save_best_only=True, mode='max')
     # Agregar flujes de entrenamiento y prueba al modelo e inciar el entrenamiento
     historia = modelo.fit_generator(
         generator=train_flow,
-        steps_per_epoch=train_images//batch_size,
+        steps_per_epoch=3,#train_images//batch_size,
         epochs=epochs,
         validation_data=test_flow,
-        validation_steps=test_images//batch_size,
+        validation_steps=3,#test_images//batch_size,
         callbacks=[checkpoint],
         verbose=1)
     return historia
 
 
-def exportar(historia):
+def exportar(modelo,historia):
     # Exportar la historia a un archivo de texto
     precision_entrenamiento = historia.history['acc'] # recuperar precision datos de entrenamiento
     precision_validacion = historia.history['val_acc'] # recuperar precision datos de prueba
-    archivo = open('RGB/historia/'+guardar_como+'.txt','w')
+    archivo = open('src/historia/'+guardar_como+'.txt','w')
     archivo.write('Precisión Entrenamiento,Precisión Prueba' + '\n')
     for indice in range(0, epochs):
         archivo.write(str(precision_entrenamiento[indice])+','+str(precision_validacion[indice])+ '\n')
@@ -110,7 +110,7 @@ def exportar(historia):
     print('historia exportada')
 
     #Exportar modelo a json
-    json_string = model.to_json()
+    json_string = modelo.to_json()
     text_file = open('src/pesosEntrenamiento/MejoresPesos_' + guardar_como+ ' _json','w')
     text_file.write(json_string)
     text_file.close()
@@ -118,7 +118,7 @@ def exportar(historia):
 def main():
     modelo = construir_modelo()
     historia = entrenar_modelo(modelo)
-    exportar_historia(modelo, historia)
+    exportar(modelo, historia)
 
 
 if __name__ == '__main__':
