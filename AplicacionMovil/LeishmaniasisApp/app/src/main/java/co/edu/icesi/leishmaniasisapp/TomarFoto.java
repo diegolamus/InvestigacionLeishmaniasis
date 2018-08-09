@@ -1,5 +1,6 @@
 package co.edu.icesi.leishmaniasisapp;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -9,17 +10,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.hardware.Camera;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-
-import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +29,7 @@ import co.edu.icesi.modelo.ProcesamientoImagen;
 
 public class TomarFoto extends AppCompatActivity {
 
+    private static final int CAMERA_REQUEST = 101;
     private static final int FOCUS_AREA_SIZE = 300;
     public static Bitmap img;
 
@@ -44,8 +45,42 @@ public class TomarFoto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tomar_foto);
         layoutCamera = findViewById(R.id.layoutCamera);
-        camera = Camera.open();
         flash = findViewById(R.id.flash);
+        flashEncendido=false;
+        // Ask for camera permision
+        // Check if permisions are granted
+        int checkPermisos = ContextCompat.checkSelfPermission(TomarFoto.this, Manifest.permission.CAMERA);
+        // if permision is not granted we should ask for it
+        if(checkPermisos != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(TomarFoto.this,
+                    new String[]{Manifest.permission.CAMERA},
+                    CAMERA_REQUEST);
+        } else
+            startCamera();
+
+    }
+
+    // Permisions callback
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case CAMERA_REQUEST: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permisions granted, show camera
+                    startCamera();
+                } else {
+                    // permission denied, return
+                    onBackPressed();
+                }
+                return;
+            }
+        }
+    }
+
+    //Start camera
+    public  void  startCamera(){
+        camera = Camera.open();
         mostrarCamara = new MostrarCamara(this, camera);
         mostrarCamara.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -57,7 +92,6 @@ public class TomarFoto extends AppCompatActivity {
             }
         });
         layoutCamera.addView(mostrarCamara);
-        flashEncendido=false;
     }
 
     //Tomar foto
