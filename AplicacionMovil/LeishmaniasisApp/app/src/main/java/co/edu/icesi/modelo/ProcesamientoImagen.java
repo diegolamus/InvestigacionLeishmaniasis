@@ -19,38 +19,11 @@ public class ProcesamientoImagen
 
 
 
-    public static Bitmap recortarImagen(Bitmap image){
-        //ruta de la imagen original
-        //obtengo un mapa de bits y creo otro mapa de bits de salida con la forma de recorte
-        Paint paint = new Paint();
-        paint.setFilterBitmap(true);
-        /////////////necesito q la ruta llegue!!!!
-        //path = getIntent().getStringExtra("ruta");
-        //Bitmap imagOriginal=BitmapFactory.
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] imagen = stream.toByteArray();
-        byte[] imagenString = Base64.encode(imagen, Base64.DEFAULT);
-        //falla... cambiar la forma de decodificar
-        image= BitmapFactory.decodeFile(imagenString.toString());
+    public static Bitmap recortarImagen(Bitmap image, int startX, int startY, int width, int height){
         Bitmap imagOriginal=image;
-        int ancho=300;
-        int alto=300;
-        Bitmap salida= Bitmap.createBitmap(ancho,alto, Bitmap.Config.ARGB_8888);
-        RectF recft= new RectF(40,70,300,300);//ubicacion en la pantalla
-        Canvas canvas = new Canvas(salida);
-        Path pt=new Path();
-        pt.addRect(recft,Path.Direction.CW);
-        canvas.clipPath(pt);
-        canvas.drawBitmap(salida,new Rect(40,70,imagOriginal.getWidth(),imagOriginal.getHeight()),
-                new Rect(0,0,ancho,alto),paint);
+        Bitmap salida = Bitmap.createBitmap(imagOriginal, startX,startY,width,height);
+        return salida;
 
-        Matrix matrix = new Matrix();
-        matrix.postScale(1f, 1f);
-        Bitmap resizedBitmap = Bitmap.createBitmap(salida, 0, 0, 300, 300, matrix, true);
-        BitmapDrawable bd = new BitmapDrawable(resizedBitmap);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        return  bd.getBitmap();
     }
 
     public static Bitmap rotarImage(Bitmap source, float angle) {
