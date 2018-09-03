@@ -13,9 +13,10 @@ Esta carpeta contiene el modelo predictivo que será usado en la herramienta no 
 
 Los datos para desarrollar el modelo en cuestión fueron proporcionados por el centro internacional de entrenamiento e investigación medica (CIDEIM). Los datos consisten en un conjunto de imágenes de los casos reportados, los cuales están clasificados en verdaderos positivos, verdaderos negativos e indeterminados. 
 
- **verdaderos positivos:** casos de pacientes que tienen lesiones que son producto leishmaniasis cutanea.
- **verdaderos negativos:** casos de pacientes que tienen lesiones que no son producto de de leishmaniasis.
- **indeterminados:** casos de los cuales no hay registro virtual ya sea por que se omitio en el diagnóstico, o por que se perdio la información.
+ **verdaderos positivos:** casos de pacientes que tienen lesiones que son producto leishmaniasis cutanea.  
+ **verdaderos negativos:** casos de pacientes que tienen lesiones que no son producto de de leishmaniasis.  
+ **indeterminados:** casos de los cuales no hay registro virtual ya sea por que se omitio en el diagnóstico, o por que se perdio la información.  
+ 
 
 ## Preparación de los datos
 
