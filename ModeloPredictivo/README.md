@@ -24,6 +24,10 @@ Para utlizar estos datos se realizó una preparación previa de los mismos elimi
   
 El resultado de la preparación de los datos fue un data set compuesto por 1541 imagenes de casos positivos y 481 imagenes de casos negativos. Los datos no serán publicados por cuestiones éticas. Para entrenar el modelo se dividen los datos en dos conjuntos, uno de entrenamiento y otro de validación, los cuales contienen el 80% (1618 imagenes, 1233 positivos - 385 negativos) y el 20% (404 imagenes, 308 positivos - 96 negativos) de los datos respectivamente.
 
+## Metricas de evaluación
+
+Para evaluar el desempeño del modelo, y para comparar que tan bien desempeña un modelo en relación a otro es importante establecer metricas de evaluación. En el conexto medico, en el diagnóstico de enfermedades, se utilizan dos metricas importantes, sensibilidad y especificidad [3]; la sensibilidad nos indica que proproción de los casos que se reporteron como positivos eran realmente positivos y la especificidad..
+
 ## Modelado
 
 Para la etapa de modelado se experimentará con varias aproximaciones. Primero, se construye una red neuronal convolucional desde cero. Segundo, se utiliza la parte convolucional de redes ya construidas, como Alexnet, y se entrena solo las capas densas de clasificación (Transfer learning). Finalmente, se utilizará la parte convolucional de redes ya construidas, pero se entrenará no solo las capas de clasificación sino algunas capas convolucionales (Fine tuning). 
@@ -40,3 +44,4 @@ Para determinar que aproximación es la mejor para resolver este problema se est
 ## Referencias
 [1] Francois Chollet. Building powerful image classification models using very little data. June 05, 2016. Disponible en: https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html  
 [2] Vikas Gupta. Keras turorial: Fine-tuning using pre-trained models. Feb 06, 2018. Disponible en: https://www.learnopencv.com/keras-tutorial-fine-tuning-using-pre-trained-models/
+[3] Comunicación personal. Tutora
