@@ -26,13 +26,20 @@ El resultado de la preparación de los datos fue un data set compuesto por 1541 
 
 ## Metricas de evaluación
 
-Para evaluar el desempeño del modelo, y para comparar que tan bien desempeña un modelo en relación a otro es importante establecer metricas de evaluación. En el conexto medico, en el diagnóstico de enfermedades, se utilizan dos metricas importantes, sensibilidad y especificidad [3]; la sensibilidad nos indica que proproción de los casos que se reporteron como positivos eran realmente positivos y la especificidad..
+Para evaluar el desempeño del modelo, y para comparar que tan bien desempeña un modelo en relación a otro es importante establecer metricas de evaluación. Por otro lado, en el conexto medico, en el diagnóstico de enfermedades, se utilizan dos metricas importantes de evaluación de los metodos de diagnóstico, sensibilidad y especificidad [3]. La sensibilidad nos indica que proproción de los casos que se reportan como positivos eran realmente positivos y la especificidad..   .
+
+Actualmente, el prediagnostico de de leishmaniasis cutanea se realiza haciendo uso de una herramienta movil, la cual evalua una serie de variables cualitativas como....
+
+De esta forma, para evaluar las diferencias en el desempeño entre los diferentes modelos construidos, y entre los modelos y los metodos de pre diagnóstico actuales se utilizarán las siguientes métricas:
+
+* precision:
+* sensibilidad o recall:
+* especificidad;
+* Kappa:
 
 ## Modelado
 
-Para la etapa de modelado se experimentará con varias aproximaciones. Primero, se construye una red neuronal convolucional desde cero. Segundo, se utiliza la parte convolucional de redes ya construidas, como Alexnet, y se entrena solo las capas densas de clasificación (Transfer learning). Finalmente, se utilizará la parte convolucional de redes ya construidas, pero se entrenará no solo las capas de clasificación sino algunas capas convolucionales (Fine tuning). 
-
-Para determinar que aproximación es la mejor para resolver este problema se establecen 3 metricas relevantes para el analisis ( precision, recall y sensibilidad). Se corre un número determinado de epocas, por ejemplo 500, y se extraen las metricas, analizando su evolución un punto máximo.
+Para la etapa de modelado se experimentará con varias aproximaciones. Primero, se construye una red neuronal convolucional desde cero. Segundo, se utiliza la parte convolucional de redes ya construidas, como Alexnet, y se entrena solo las capas densas de clasificación (Transfer learning). Finalmente, se utilizará la parte convolucional de redes ya construidas, pero se entrenará no solo las capas de clasificación sino algunas capas convolucionales (Fine tuning). En cada experimento se corren 500 epocas y se compara con los demas experimentos a partir de las 4 métricas establecidas.
 
 ### 1. Construcción de red neuronal desde cero
 
