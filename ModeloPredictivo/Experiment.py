@@ -20,6 +20,8 @@ class_mode = 'binary'
 epochs = 1
 guardar_como= 'Prueba_Xception' #Con que nombre se van a aguardar los pesos y exportar la historia
 
+def get_CNN_model():
+    return None
 
 def construir_modelo():
     # Cargar modelo pre-entrenado (Transfer Learning). Solo se carga uno.
@@ -31,12 +33,15 @@ def construir_modelo():
     #conv_layers = InceptionResNetV2(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
     #conv_layers = MobileNet(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
     #conv_layers = DenseNet121(weights='imagenet',include_top=False,input_shape=(imgage_size, imgage_size, 3))
+    
     # Congelar las capas que no se quieren entrenar
     for layer in conv_layers.layers[:]:
         layer.trainable = False
+        
     # Imprimir las capas que se van a entrenar
     for layer in conv_layers.layers:
         print(layer, layer.trainable)
+        
     # Crear modelo usando keras
     modelo = Sequential()
     modelo.add(conv_layers) # Se agrega el modelo pre-cargado al actual
