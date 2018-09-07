@@ -18,12 +18,14 @@ public class ProcesamientoImagen
 {
 
 
-
     public static Bitmap recortarImagen(Bitmap image, int startX, int startY, int width, int height){
-        Bitmap imagOriginal=image;
-        Bitmap salida = Bitmap.createBitmap(imagOriginal, startX,startY,width,height);
+        Bitmap salida = Bitmap.createBitmap(image, startX,startY,width,height);
         return salida;
+    }
 
+    public static Bitmap recortarImagen_TomarFoto(Bitmap image, int startX, int startY, int width, int height){
+        Bitmap salida = Bitmap.createBitmap(image, startX,startY,width,height);
+        return salida;
     }
 
     public static Bitmap rotarImage(Bitmap source, float angle) {

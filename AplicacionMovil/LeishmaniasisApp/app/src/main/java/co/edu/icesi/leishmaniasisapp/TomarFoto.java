@@ -20,6 +20,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,7 @@ public class TomarFoto extends AppCompatActivity {
     Camera camera;
     FrameLayout layoutCamera;
     MostrarCamara mostrarCamara;
+    TextView areaRecorte;
     Button flash;
     Boolean flashEncendido;
 
@@ -47,6 +50,7 @@ public class TomarFoto extends AppCompatActivity {
         layoutCamera = findViewById(R.id.layoutCamera);
         flash = findViewById(R.id.flash);
         flashEncendido=false;
+        areaRecorte = findViewById(R.id.areaRecorte);
         // Ask for camera permision
         // Check if permisions are granted
         int checkPermisos = ContextCompat.checkSelfPermission(TomarFoto.this, Manifest.permission.CAMERA);
@@ -107,7 +111,7 @@ public class TomarFoto extends AppCompatActivity {
             Bitmap imageMap = BitmapFactory.decodeByteArray(bytes, 0,bytes.length);
             if(imageMap.getWidth()> imageMap.getHeight())
                 imageMap = ProcesamientoImagen.rotarImage(imageMap,90);
-            //TODO recortar imagen
+            imageMap = ProcesamientoImagen.recortarImagen_TomarFoto(imageMap,(int)areaRecorte.getX(),(int)areaRecorte.getY(),areaRecorte.getWidth(),areaRecorte.getHeight());
             img=imageMap;
             //Cambiar de pantalla y agregar imagen a intent
             Intent intent = new Intent(TomarFoto.this, MostrarResultados.class);
