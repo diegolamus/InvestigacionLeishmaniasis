@@ -16,7 +16,7 @@
         <com.jsibbold.zoomage.ZoomageView
             android:id="@+id/GalleryPreviewImg"
             android:layout_width="match_parent"
-            android:layout_height="460dp"
+            android:layout_height="500dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/blank"
@@ -53,7 +53,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/roundedcornerbutton"
         android:onClick="onClick_Boton2"
-        android:text="Recortar"
+        android:text="Procesar"
         android:textAllCaps="false"
         android:textSize="18sp" />
 

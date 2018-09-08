@@ -29,7 +29,7 @@ import java.util.HashMap;
 
 public class AlbumActivity extends AppCompatActivity {
 
-    GridView galleryGridView;
+    GridView galleryGridView; //lista de carpetas de imagenes
     ArrayList<HashMap<String, String>> imageList = new ArrayList<HashMap<String, String>>();
     String album_name = "";
     LoadAlbumImages loadAlbumTask;
@@ -50,6 +50,10 @@ public class AlbumActivity extends AppCompatActivity {
         DisplayMetrics metrics = resources.getDisplayMetrics();
         float dp = iDisplayWidth / (metrics.densityDpi / 160f);
 
+        //Se considera el caso en que, si la pantalla del dispositivo es inferior a los 360dp,
+        // entonces se hace la conversion a pixel deacuerdo a la resolucion de pantalla ajustando al tamaño
+        // pertinente el componente que permite visualizar el listado de album
+
         if(dp < 360)
         {
             dp = (dp - 17) / 2;
@@ -63,7 +67,7 @@ public class AlbumActivity extends AppCompatActivity {
 
 
     }
-
+// Clase con la responsabilidad de
 
     class LoadAlbumImages extends AsyncTask<String, Void, String> {
         @Override
@@ -117,10 +121,11 @@ public class AlbumActivity extends AppCompatActivity {
     }
 }
 
-
+// adapter: permite tomar los datos y mostrarlos de forma grafica, en este caso los atributos asociados a un album de imagenes
 class SingleAlbumAdapter extends BaseAdapter {
     private Activity activity;
-    private ArrayList<HashMap< String, String >> data;
+    private ArrayList<HashMap< String, String >> data; //esctructura que contiene los archivos de cada album
+
     public SingleAlbumAdapter(Activity a, ArrayList < HashMap < String, String >> d) {
         activity = a;
         data = d;
@@ -128,13 +133,18 @@ class SingleAlbumAdapter extends BaseAdapter {
     public int getCount() {
         return data.size();
     }
+
+    //recibe la posicion del objeto, para luego retornar el objeto de la posicion ingresada.
     public Object getItem(int position) {
         return position;
     }
+    //recibe la posicion del objeto, para luego retornar el id de este.
     public long getItemId(int position) {
         return position;
     }
 
+
+    //metodo encargado de cargar las imagenes a las carpetas correspondientes.
     public View getView(int position, View convertView, ViewGroup parent) {
         SingleAlbumViewHolder holder = null;
         if (convertView == null) {
@@ -155,7 +165,7 @@ class SingleAlbumAdapter extends BaseAdapter {
         try {
 
             Glide.with(activity)
-                    .load(new File(song.get(Function.KEY_PATH))) // Uri of the picture
+                    .load(new File(song.get(Function.KEY_PATH))) // Uri de las fotos
                     .into(holder.galleryImage);
 
 
@@ -164,7 +174,7 @@ class SingleAlbumAdapter extends BaseAdapter {
     }
 }
 
-
+// gebneradora de carpetas
 class SingleAlbumViewHolder {
     ImageView galleryImage;
 }

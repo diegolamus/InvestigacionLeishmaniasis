@@ -16,6 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+//Esta clase contiene metodos estaticos, que realizan procesos de conversion, manejar formatos y estructura de datos
+
 public class Function {
 
 
@@ -50,7 +52,7 @@ public class Function {
     }
 
 
-
+//metodo que se encarga de contar el numero de fotos en un album, retornando el numero total de archivos contenidos
     public static String getCount(Context c, String album_name)
     {
         Uri uriExternal = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
@@ -74,6 +76,7 @@ public class Function {
         return formatter.format(date);
     }
 
+    //permite deacuerdo a la densidad de pantalla redimencionar los componenetes visuales en la cantidad de pixeles que soporta
     public static float convertDpToPixel(float dp, Context context){
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();

@@ -56,7 +56,7 @@ public class SeleccionarFoto extends AppCompatActivity {
             float px = Function.convertDpToPixel(dp, getApplicationContext());
             galleryGridView.setColumnWidth(Math.round(px));
         }
-
+        //pide permisos al usuario en tiempo de ejecucion para acceder o guardar archivos en galeria
         String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         if(!Function.hasPermissions(this, PERMISSIONS)){
             ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_KEY);
@@ -64,6 +64,8 @@ public class SeleccionarFoto extends AppCompatActivity {
 
     }
 
+    //Aquí se cargan imágenes tanto de almacenamiento EXTERNO E INTERNO
+    // y se agrupa de acuerdo con el nombre de la Carpeta de Imágenes.
     class LoadAlbum extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
@@ -100,7 +102,7 @@ public class SeleccionarFoto extends AppCompatActivity {
                 albumList.add(Function.mappingInbox(album, path, timestamp, Function.converToTime(timestamp), countPhoto));
             }
             cursor.close();
-            Collections.sort(albumList, new MapComparator(Function.KEY_TIMESTAMP, "dsc")); // Arranging photo album by timestamp decending
+            Collections.sort(albumList, new MapComparator(Function.KEY_TIMESTAMP, "dsc")); // Ordenación del álbum de fotos por marca de tiempo en forma descendente
             return xml;
         }
 
@@ -160,7 +162,7 @@ public class SeleccionarFoto extends AppCompatActivity {
 }
 
 
-
+// adapter: permite tomar los datos y mostrarlos de forma grafica, en este caso los atributos asociados a una carpeta de imagenes
 
 class AlbumAdapter extends BaseAdapter {
     private Activity activity;
@@ -205,7 +207,7 @@ class AlbumAdapter extends BaseAdapter {
             holder.gallery_count.setText(song.get(Function.KEY_COUNT));
 
             Glide.with(activity)
-                    .load(new File(song.get(Function.KEY_PATH))) // Uri of the picture
+                    .load(new File(song.get(Function.KEY_PATH))) // Uri de la imagen
                     .into(holder.galleryImage);
 
 
