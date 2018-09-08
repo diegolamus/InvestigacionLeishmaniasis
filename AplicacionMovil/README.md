@@ -20,21 +20,24 @@ Una vez evaluada la imagen se mostrará al usuario el resultado arrojado por el 
 
 ### Requerimientos funcionales
 
-**R-F1.** Al entrar en la aplicaciòn se debe mostrar un menú de inicio con la guía de uso, funcionalidades y la opción de continuar.
+**R-F1.** Al entrar en la aplicación se debe mostrar un menú de inicio, con las principales funcionalidades de la aplicación, como: tomar foto, seleccionar foto de la galería y instrucciones de uso.
 
-**R-F2.** La aplicación debe permitir abrir una foto seleccionando y cargándola desde la galería de fotos del teléfono.
+**R-F2.** La aplicación debe tener una guía de uso para el usuario, donde explique claramente las instrucciones de navegación de la aplicación.
 
-**R-F3.** La aplicaciòn debe permitir abrir una foto habilitando la cámara del teléfono para capturarla.
+**R-F3.** La aplicación debe permitir abrir una foto seleccionandola y cargándola desde la galería de fotos del teléfono.
 
-**R-F4.** Después de  abrir una foto  la aplicación debe permitir recortar la imagen de forma cuadrada deslizando los dedos por la pantalla; El tamaño debe ser el mismo en ancho y altura. 
+**R-F4.** La aplicaciòn debe permitir abrir una foto habilitando la cámara del teléfono para capturarla.
 
-**R-F5** Después de recortar una imagen  se debe mostrar en pantalla, y dar al usuario la opción de realizar el pre diagnóstico a partir del modelo predictivo.
+**R-F5.** Cuando se visualice una foto, la aplicación debe permitir recortar la imagen, obteniendo como resultado un recorte cuadrado de la imagen; el tamaño debe ser el mismo en ancho y altura. 
 
-**R-F6.** Si el usuario realiza el prediagnóstico de la imagen se debe mostrar en pantalla tanto el recorte de la imagen como la probabilidad de que tenga leishmaniasis cutánea.
+**R-F6** Una vez se recorte la imagen se debe realizar el pre diagnóstico a partir del modelo.
 
-**R-F7.** Después de mostrar en pantalla la probabilidad de que el recorte contenga una imagen producto de leishmaniasis cutánea, el usuario debe poder guardar los resultados como una imagen, incluyendo tanto el recorte como la probabilidad.
+**R-F7.** Si el usuario realiza el prediagnóstico de la imagen se debe mostrar en pantalla tanto el recorte de la imagen como la probabilidad de que tenga leishmaniasis cutánea.
 
-**R-F8.**  La aplicación debe permitir cancelar la acción y volver al menú de inicio  en todo momento.
+**R-F8.** Después de mostrar en pantalla la probabilidad de que el recorte contenga una imagen producto de leishmaniasis cutánea, el usuario debe poder guardar los resultados como una imagen, incluyendo tanto el recorte como la probabilidad.
+
+**R-F9.**  La aplicación debe permitir cancelar la acción y volver al menú de inicio  en todo momento.
+
 
 ### Requerimientos no funcionales
 
