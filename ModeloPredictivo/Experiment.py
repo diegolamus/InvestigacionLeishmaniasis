@@ -20,6 +20,22 @@ class_mode = 'binary'
 epochs = 1
 guardar_como= 'Prueba_Xception' #Con que nombre se van a aguardar los pesos y exportar la historia
 
+def precision(y_true, y_pred):
+    TP,FP,TN,FN = 0,0,0,0
+    if (y_true == and y_true==y_pred):
+        TP +=1
+    elif (y_true == and y_true!=y_pred):
+        FP +=1
+    elif (
+        
+    
+def recall(y_true, y_pred):
+
+def specificity(y_true, y_pred):
+
+def kappa(y_true, y_pred):
+    
+    
 def get_CNN_model():
     return None
 
