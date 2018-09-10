@@ -52,7 +52,7 @@ Una vez evaluada la imagen se mostrará al usuario el resultado arrojado por el 
 
 **Caso de uso**
 
-![](Diagramas/caso de uso.jpg)
+![](Diagramas/casoDeUso.jpg)
 
 
                                                            
