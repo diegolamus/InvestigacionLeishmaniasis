@@ -50,7 +50,11 @@ Una vez evaluada la imagen se mostrará al usuario el resultado arrojado por el 
 
 ## Diseño
 
-                                                           **Caso de uso**
+**Caso de uso**
+
+![](Diagramas/caso de uso.jpg)
+
+
                                                            
                                                        
 
