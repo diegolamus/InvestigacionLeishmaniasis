@@ -28,18 +28,18 @@ El resultado de la preparación de los datos fue un data set compuesto por 1541 
 
 Para evaluar el desempeño del modelo, y para comparar que tan bien desempeña un modelo en relación a otro es importante establecer metricas de evaluación. Por otro lado, en el conexto medico, en el diagnóstico de enfermedades, se utilizan dos metricas importantes de evaluación de los metodos de diagnóstico, sensibilidad y especificidad [3]. La sensibilidad nos indica que proproción de los casos que se reportan como positivos eran realmente positivos y la especificidad..   .
 
-Actualmente, el prediagnostico de de leishmaniasis cutanea se realiza haciendo uso de una herramienta movil, la cual evalua una serie de variables cualitativas como....
+Actualmente, el prediagnostico de de leishmaniasis cutanea se realiza haciendo uso de una herramienta movil, la cual evalua una serie de variables cualitativas como...(preguntar sensibilidad y especificidad)
 
 De esta forma, para evaluar las diferencias en el desempeño entre los diferentes modelos construidos, y entre los modelos y los metodos de pre diagnóstico actuales se utilizarán las siguientes métricas:
 
-* precision:
-* sensibilidad o recall:
-* especificidad;
-* Kappa:
+* precision: De las imagenes que se identificaron en cada clase, que porcentaje realmente corresponden a dichas clases. 
+* sensibilidad o recall: De las imagenes de cada clase, que porcentaje se identifico correctamente de dichas clases.
+* especificidad:
+* Kappa: Medida de evaluación para datasets desbalanceados. Elimina el sesgo en las metricas que se atribuye al desbalance en las clases.
 
 ## Modelado
 
-Para la etapa de modelado se experimentará con varias aproximaciones. Primero, se construye una red neuronal convolucional desde cero. Segundo, se utiliza la parte convolucional de redes ya construidas, como Alexnet, y se entrena solo las capas densas de clasificación (Transfer learning). Finalmente, se utilizará la parte convolucional de redes ya construidas, pero se entrenará no solo las capas de clasificación sino algunas capas convolucionales (Fine tuning). En cada experimento se corren 500 epocas y se compara con los demas experimentos a partir de las 4 métricas establecidas.
+Para la etapa de modelado se experimentará con varias aproximaciones. Primero, se construye una red neuronal convolucional desde cero para evaluar que tanto puede ser entrenada a partir de las imagenes que existen. Segundo, se utiliza la parte convolucional de redes ya construidas, como Alexnet, y se entrena solo las capas densas de clasificación (Transfer learning); esto se realiza con la intención de mejorar el rendimiento del modelo al iniciar desde un modelo ya entrenado para el análisis de imagenes. Finalmente, se utilizará la parte convolucional de redes ya construidas, pero se entrenará no solo las capas de clasificación sino algunas capas convolucionales (Fine tuning) con el fin de adaptar los últimos filtros a las imagenes del dataset construido.
 
 ### 1. Construcción de red neuronal desde cero
 
@@ -47,6 +47,7 @@ Para la etapa de modelado se experimentará con varias aproximaciones. Primero, 
 
 ### 3. Fine tuning
 
+Detalles archivo adjunto: Experiment.jpyn
 
 ## Referencias
 [1] Francois Chollet. Building powerful image classification models using very little data. June 05, 2016. Disponible en: https://blog.keras.io/building-powerful-image-classification-models-using-very-little-data.html  
