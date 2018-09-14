@@ -41,12 +41,6 @@ De esta forma, para evaluar las diferencias en el desempeño entre los diferente
 
 Para la etapa de modelado se experimentará con varias aproximaciones. Primero, se construye una red neuronal convolucional desde cero para evaluar que tanto puede ser entrenada a partir de las imagenes que existen. Segundo, se utiliza la parte convolucional de redes ya construidas, como Alexnet, y se entrena solo las capas densas de clasificación (Transfer learning); esto se realiza con la intención de mejorar el rendimiento del modelo al iniciar desde un modelo ya entrenado para el análisis de imagenes. Finalmente, se utilizará la parte convolucional de redes ya construidas, pero se entrenará no solo las capas de clasificación sino algunas capas convolucionales (Fine tuning) con el fin de adaptar los últimos filtros a las imagenes del dataset construido.
 
-### 1. Construcción de red neuronal desde cero
-
-### 2. Transfer learning
-
-### 3. Fine tuning
-
 Detalles archivo adjunto: Experiment.jpyn
 
 ## Referencias
