@@ -54,6 +54,23 @@ Una vez evaluada la imagen se mostrará al usuario el resultado arrojado por el 
 
 ![](Diagramas/casoDeUso.jpg)
 
+**Diagrama de clases**
+
+![](Diagramas/ClassDiagram.jpg)
+
+**Deployment**
+
+![](Diagramas/DeploymentDiagram.jpg)
+
+**Diagrama de secuencia**
+
+![](Diagramas/secuencia_tomarFoto.png)
+
+**Wireframe**
+
+![](Diagramas/Wireframing.jpg)
+
+
 
                                                            
                                                        
