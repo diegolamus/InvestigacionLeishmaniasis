@@ -52,23 +52,43 @@ Una vez evaluada la imagen se mostrará al usuario el resultado arrojado por el 
 
 **Caso de uso**
 
+Diagrama mediante el cual se especifica la comunicación y se explica el comportamiento del sistema en la interacción con el o los usuarios. Las tareas están enfocados a un único autor que es el usuario que interactúa con estas, siguiendo un flujo básico en el proceso de tomar una foto haciendo uso de la cámara del celular o seleccionar una imagen de la galería y posteriormente efectuar la opción de procesar la imagen para obtener un resultado o predicción. Finalmente, lo que se describe aquí es qué debe hacer el sistema en su interacción con el actor.
+
 ![](Diagramas/casoDeUso.jpg)
 
-**Diagrama de clases**
 
-![](Diagramas/ClassDiagram.jpg)
-
-**Deployment**
-
-![](Diagramas/DeploymentDiagram.jpg)
-
-**Diagrama de secuencia**
-
-![](Diagramas/secuencia_tomarFoto.png)
 
 **Wireframe**
 
+Se presenta con el objetivo comunicar la jerarquía de la información, el contenido y las consideraciones de diseño, todo esto a nivel de pantalla. De tal forma que el usuario la encuentre fácil y rápido. Aquí identificamos que quiere ver el usuario y guiarlo de forma lógica al objetivo. Podemos ver la transición entre pantallas dependiendo de la tarea que se esté llevando a cabo. Y se evidencia el número total de pantallas requeridas para desarrollar el proyecto.
+
+
 ![](Diagramas/Wireframing.jpg)
+
+
+
+**Diagrama de clases**
+
+
+
+![](Diagramas/ClassDiagram.jpg)
+
+
+
+**Deployment**
+
+Este diagrama muestra la arquitectura del sistema de hardware que en este caso es un dispositivo móvil (celular), y de los elementos de software que se implementan, esto siguiendo un modelo MVC que permite separar las responsabilidades entre los componentes de la aplicación, facilitando el proceso de mantenimiento y respetando un orden en la interacción de funcionalidades. Así mismo se mapean los recursos de hardware que cada uno de los módulos requiere en tiempo de ejecución.
+
+![](Diagramas/DeploymentDiagram.jpg)
+
+
+**Diagrama de secuencia**
+
+
+
+![](Diagramas/secuencia_tomarFoto.png)
+
+
 
 
 
