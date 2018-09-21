@@ -115,6 +115,7 @@ public class AlbumActivity extends AppCompatActivity {
                     Intent intent = new Intent(AlbumActivity.this, GalleryPreview.class);
                     intent.putExtra("path", imageList.get(+position).get(Function.KEY_PATH));
                     startActivity(intent);
+                    finish();
                 }
             });
         }

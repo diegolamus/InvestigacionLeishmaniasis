@@ -12,6 +12,8 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Base64;
+import android.view.View;
+
 import java.io.ByteArrayOutputStream;
 
 public class ProcesamientoImagen
@@ -39,4 +41,13 @@ public class ProcesamientoImagen
         //TODO obtener predicción
         return Math.random()*100;
     }
+
+    public static Bitmap loadBitmapFromView(View v) {
+        Bitmap bitmap;
+        v.setDrawingCacheEnabled(true);
+        bitmap = Bitmap.createBitmap(v.getDrawingCache());
+        v.setDrawingCacheEnabled(false);
+        return bitmap;
+    }
+
 }

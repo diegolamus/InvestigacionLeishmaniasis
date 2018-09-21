@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.jsibbold.zoomage.ZoomageView;
@@ -24,7 +27,7 @@ public class GalleryPreview extends AppCompatActivity {
     ImageView imagenPrevia;
     public static String path;
     public static Bitmap recuperaImagen;
-    ZoomageView GalleryPreviewImg;
+    MyZoomageView GalleryPreviewImg;
     TextView squa;
 
 
@@ -35,6 +38,7 @@ public class GalleryPreview extends AppCompatActivity {
 
         squa = findViewById(R.id.squa);
         GalleryPreviewImg = findViewById(R.id.GalleryPreviewImg);
+
 
         Intent intent = getIntent();
         path = intent.getStringExtra("path");
@@ -66,6 +70,7 @@ public class GalleryPreview extends AppCompatActivity {
         //variable con la imagen
 
         Bitmap prueba = BitmapFactory.decodeFile(path);
+        //
 
         //En el caso que se cargue una imagen donde el alto sea mayor al ancho, entonces se rota 90 grados.
         if (prueba.getWidth() < prueba.getHeight()) {
@@ -77,6 +82,7 @@ public class GalleryPreview extends AppCompatActivity {
             prueba = Bitmap.createScaledBitmap(prueba, (int) (1.2 * GalleryPreviewImg.getWidth()), (int) (1.2 * GalleryPreviewImg.getWidth() * prop), false);
         }
 
+        prueba = ProcesamientoImagen.loadBitmapFromView(GalleryPreviewImg);
 
         float lado = 1;
         float startX = 0;
@@ -113,7 +119,7 @@ public class GalleryPreview extends AppCompatActivity {
         Intent intentRecortar = new Intent(GalleryPreview.this, MostrarResultados.class);
         intentRecortar.putExtra("actividad", "seleccionarFoto");
         startActivity(intentRecortar);
-
+        finish();
     }
 
 }

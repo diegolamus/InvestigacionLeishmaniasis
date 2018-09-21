@@ -117,6 +117,7 @@ public class SeleccionarFoto extends AppCompatActivity {
                     Intent intent = new Intent(SeleccionarFoto.this, AlbumActivity.class);
                     intent.putExtra("name", albumList.get(+position).get(Function.KEY_ALBUM));
                     startActivity(intent);
+                    finish();
                 }
             });
         }
