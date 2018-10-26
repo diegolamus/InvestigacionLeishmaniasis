@@ -111,7 +111,7 @@ public class TomarFoto extends AppCompatActivity {
             Bitmap imageMap = BitmapFactory.decodeByteArray(bytes, 0,bytes.length);
             if(imageMap.getWidth()> imageMap.getHeight())
                 imageMap = ProcesamientoImagen.rotarImage(imageMap,90);
-            imageMap = ProcesamientoImagen.recortarImagen_TomarFoto(imageMap,(int)areaRecorte.getX(),(int)areaRecorte.getY(),areaRecorte.getWidth(),areaRecorte.getHeight());
+            imageMap = ProcesamientoImagen.recortarImagen(imageMap,(int)areaRecorte.getX(),(int)areaRecorte.getY(),areaRecorte.getWidth(),areaRecorte.getHeight());
             img=imageMap;
             //Cambiar de pantalla y agregar imagen a intent
             Intent intent = new Intent(TomarFoto.this, MostrarResultados.class);
