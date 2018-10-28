@@ -60,7 +60,7 @@ public class MostrarResultados extends AppCompatActivity {
         // progressBarProbabilidad = findViewById(R.id.progressBar);
         textoProbabilidad = findViewById(R.id.textoProbabilidad);
         //Ingresar probabilidad a barra de progreso y texto
-        double probabilidad = ProcesamientoImagen.obtenerProbabilidad(img);
+        double probabilidad = ProcesamientoImagen.obtenerProbabilidad(getApplicationContext(), img);
         // progressBarProbabilidad.setProgress((int)probabilidad);
         textoProbabilidad.setText("" + Math.round(probabilidad * 100) / 100.0 + "%");
     }
