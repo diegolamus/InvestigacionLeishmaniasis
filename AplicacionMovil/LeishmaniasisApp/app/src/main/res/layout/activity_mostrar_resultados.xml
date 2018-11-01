@@ -54,18 +54,6 @@
         android:layout_marginTop="8dp">
 
         <Button
-            android:id="@+id/btnInicio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginStart="6dp"
-            android:layout_weight="1"
-            android:background="#B2EBF2"
-            android:onClick="onClick_Inicio"
-            android:text="INICIO" />
-
-        <Button
             android:id="@+id/btnGuadar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

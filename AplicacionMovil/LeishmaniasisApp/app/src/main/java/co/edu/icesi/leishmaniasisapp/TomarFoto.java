@@ -124,11 +124,11 @@ public class TomarFoto extends AppCompatActivity {
     //Activar y desactivar flash-------------------------------
     public void activarFlash(View v){
         if(flashEncendido) {
-            flash.setBackground(getResources().getDrawable(R.mipmap.flash_off_round));
+            flash.setBackground(getResources().getDrawable(R.drawable.ic_flash_off));
             apagarFlash();
             flashEncendido=false;
         }else{
-            flash.setBackground(getResources().getDrawable(R.mipmap.flash_on_round));
+            flash.setBackground(getResources().getDrawable(R.drawable.ic_flash_on));
             encenderFlash();
             flashEncendido=true;
         }

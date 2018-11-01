@@ -10,10 +10,12 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -65,23 +67,34 @@ public class MostrarResultados extends AppCompatActivity {
         textoProbabilidad.setText("" + Math.round(probabilidad * 100) / 100.0 + "%");
     }
 
-    //Retornar a inicio
-    public void onClick_Inicio(View v) {
-        onBackPressed();
-    }
 
     //Guadar foto
     public void onClick_Guardar(View v) {
-        try {
-            String fotoName = UUID.randomUUID().toString() + ".png";
-            String path = carpeta + "/" + fotoName;
-            FileOutputStream foto = new FileOutputStream(new File(path));
-            img.compress(Bitmap.CompressFormat.PNG, 100, foto);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
-            Toast.makeText(MostrarResultados.this, "Imagen guardada", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(carpeta.exists()) {
+            try {
+                String fotoName = textoProbabilidad+ UUID.randomUUID().toString() + ".png";
+                String path = carpeta + "/" + fotoName;
+                FileOutputStream foto = new FileOutputStream(new File(path));
+                img.compress(Bitmap.CompressFormat.PNG, 100, foto);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
+                Toast.makeText(MostrarResultados.this, "Imagen guardada", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MostrarResultados.this);
+        View mView=getLayoutInflater().inflate(R.layout.activity_alert_dialog,null);
+        Button btn_inicio= mView.findViewById(R.id.btn_inicio);
+        btn_inicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        mBuilder.setView(mView);
+        AlertDialog dialog=mBuilder.create();
+        dialog.show();
     }
 
 
