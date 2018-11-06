@@ -13,27 +13,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Inicio"
+        <activity
+            android:name=".Inicio"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Instrucciones"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".TomarFoto"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".SeleccionarFoto"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AlbumActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".GalleryPreview"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MostrarResultados"
-            android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".TomarFoto"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SeleccionarFoto"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AlbumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GalleryPreview"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MostrarResultados"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Instrucciones"
+            android:label="@string/title_activity_instruciones2"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

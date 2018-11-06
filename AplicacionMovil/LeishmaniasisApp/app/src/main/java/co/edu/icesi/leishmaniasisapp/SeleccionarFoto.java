@@ -137,7 +137,8 @@ public class SeleccionarFoto extends AppCompatActivity {
                     loadAlbumTask.execute();
                 } else
                 {
-                    Toast.makeText(SeleccionarFoto.this, "You must accept permissions.", Toast.LENGTH_LONG).show();
+                    // permission denied
+                    onBackPressed();
                 }
             }
         }
@@ -145,12 +146,9 @@ public class SeleccionarFoto extends AppCompatActivity {
     }
 
 
-
-
-    @Override
+   @Override
     protected void onResume() {
         super.onResume();
-
         String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         if(!Function.hasPermissions(this, PERMISSIONS)){
             ActivityCompat.requestPermissions(this, PERMISSIONS, REQUEST_PERMISSION_KEY);

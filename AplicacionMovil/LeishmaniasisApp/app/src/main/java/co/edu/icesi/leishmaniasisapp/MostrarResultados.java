@@ -36,10 +36,10 @@ public class MostrarResultados extends AppCompatActivity {
 
     ImageView fotoDisplay;
     Bitmap img;
-    ProgressBar progressBarProbabilidad;
     TextView textoProbabilidad;
     String nameCarpeta; //nombre del directorio
     File carpeta;
+    double probabilidad=0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class MostrarResultados extends AppCompatActivity {
         // progressBarProbabilidad = findViewById(R.id.progressBar);
         textoProbabilidad = findViewById(R.id.textoProbabilidad);
         //Ingresar probabilidad a barra de progreso y texto
-        double probabilidad = ProcesamientoImagen.obtenerProbabilidad(getApplicationContext(), img);
+        probabilidad = ProcesamientoImagen.obtenerProbabilidad(getApplicationContext(), img);
         // progressBarProbabilidad.setProgress((int)probabilidad);
         textoProbabilidad.setText("" + Math.round(probabilidad * 100) / 100.0 + "%");
     }
@@ -72,7 +72,7 @@ public class MostrarResultados extends AppCompatActivity {
     public void onClick_Guardar(View v) {
         if(carpeta.exists()) {
             try {
-                String fotoName = textoProbabilidad+ UUID.randomUUID().toString() + ".png";
+                String fotoName = probabilidad + UUID.randomUUID().toString() + ".png";
                 String path = carpeta + "/" + fotoName;
                 FileOutputStream foto = new FileOutputStream(new File(path));
                 img.compress(Bitmap.CompressFormat.PNG, 100, foto);

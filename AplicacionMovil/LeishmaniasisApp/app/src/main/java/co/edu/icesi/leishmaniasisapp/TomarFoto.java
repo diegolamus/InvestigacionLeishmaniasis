@@ -207,6 +207,10 @@ public class TomarFoto extends AppCompatActivity {
         }
         return result;
     }
+
+    public void onClick_cancelar(View v){
+        onBackPressed();
+    }
 }
 
 @SuppressLint("ViewConstructor")
