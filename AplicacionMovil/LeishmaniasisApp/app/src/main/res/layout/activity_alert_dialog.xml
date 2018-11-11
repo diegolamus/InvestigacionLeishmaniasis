@@ -21,12 +21,13 @@
 
     <Button
         android:id="@+id/btn_inicio"
-        android:layout_width="wrap_content"
+        android:layout_width="158dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:background="@color/colorPrimary"
-        android:text="Nuevo Diagnóstico"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/roundedbutton_rojo"
+        android:text="Nuevo diagnóstico"
         android:textAlignment="center"
-        android:textColor="@color/secondaryText" />
+        android:textAllCaps="false"
+        android:textColor="@color/textIcons" />
 
 </LinearLayout>
