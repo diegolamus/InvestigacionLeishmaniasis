@@ -1,6 +1,7 @@
 package co.edu.icesi.leishmaniasisapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,7 +10,9 @@ import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -78,6 +81,7 @@ public class MostrarResultados extends AppCompatActivity {
                 img.compress(Bitmap.CompressFormat.PNG, 100, foto);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
                 Toast.makeText(MostrarResultados.this, "Imagen guardada", Toast.LENGTH_SHORT).show();
+                notifyMediaStoreScanner(new File(path));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -97,6 +101,17 @@ public class MostrarResultados extends AppCompatActivity {
         dialog.show();
     }
 
+
+    public final void notifyMediaStoreScanner(final File file) {
+        try {
+            MediaStore.Images.Media.insertImage(this.getContentResolver(),
+                    file.getAbsolutePath(), file.getName(), null);
+            this.sendBroadcast(new Intent(
+                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(file)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
 

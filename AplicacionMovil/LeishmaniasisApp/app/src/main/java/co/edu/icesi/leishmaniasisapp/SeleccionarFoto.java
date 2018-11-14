@@ -9,11 +9,13 @@ import android.database.Cursor;
 import android.database.MergeCursor;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,10 +101,23 @@ public class SeleccionarFoto extends AppCompatActivity {
                 timestamp = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATE_MODIFIED));
                 countPhoto = Function.getCount(getApplicationContext(), album);
 
+                Log.e(">>>>", "PATH: " + path);
+                Log.e(">>>>", "ALBUM: " + album);
+                Log.e(">>>>", "TIME: " + timestamp);
+                Log.e(">>>>", "COUNTER: " + countPhoto);
                 albumList.add(Function.mappingInbox(album, path, timestamp, Function.converToTime(timestamp), countPhoto));
             }
+            //Forzar la muestra de la carpeta
+            File folder = new File(Environment.getExternalStorageDirectory() + "/leishApp/");
+            if (folder.exists()) {
+                if (folder.isDirectory()) {
+                    if (folder.list().length >= 1) {
+                        //albumList.add(Function.mappingInbox("leishApp", Environment.getExternalStorageDirectory() + "/leishApp/"+folder.list()[0], ""+ Calendar.getInstance().getTime().getTime(), Function.converToTime(""+Calendar.getInstance().getTime().getTime()), folder.list().length+" Photos"));
+                    }
+                }
+            }
             cursor.close();
-            Collections.sort(albumList, new MapComparator(Function.KEY_TIMESTAMP, "dsc")); // Ordenación del álbum de fotos por marca de tiempo en forma descendente
+           // Collections.sort(albumList, new MapComparator(Function.KEY_TIMESTAMP, "dsc")); // Ordenación del álbum de fotos por marca de tiempo en forma descendente
             return xml;
         }
 

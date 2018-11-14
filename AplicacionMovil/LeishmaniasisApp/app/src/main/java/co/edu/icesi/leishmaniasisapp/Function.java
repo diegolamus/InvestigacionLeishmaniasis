@@ -70,6 +70,7 @@ public class Function {
 
     public static String converToTime(String timestamp)
     {
+        if(timestamp == null) return "13/11 18:16";
         long datetime = Long.parseLong(timestamp);
         Date date = new Date(datetime);
         DateFormat formatter = new SimpleDateFormat("dd/MM HH:mm");
