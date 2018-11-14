@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class MostrarResultados extends AppCompatActivity {
     TextView textoProbabilidad;
     String nameCarpeta; //nombre del directorio
     File carpeta;
+    EditText ed_nombreImg;
     double probabilidad=0.0;
 
     @Override
@@ -89,6 +91,7 @@ public class MostrarResultados extends AppCompatActivity {
         textoProbabilidad.setText("" + Math.round(probabilidad * 100) / 100.0 + "%");
     }
 
+
     // Permisions callback
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -106,10 +109,29 @@ public class MostrarResultados extends AppCompatActivity {
         }
     }
 
+    //pide el nombre de la imagen
+    public void onClick_Aceptar(View v){
+
+        AlertDialog.Builder informacion= new AlertDialog.Builder(MostrarResultados.this);
+        View aView=getLayoutInflater().inflate(R.layout.activity_alert,null);
+        ed_nombreImg = findViewById(R.id.ed_text);
+        Button btn_aceptar=aView.findViewById(R.id.btn_aceptar);
+        btn_aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClick_Guardar(v);
+            }
+        });
+        informacion.setView(aView);
+        AlertDialog dialog=informacion.create();
+        dialog.show();
+    }
+
     //Guadar foto
     public void onClick_Guardar(View v) {
         if(carpeta.exists()) {
             try {
+                // String name= ed_nombreImg.getText().toString();
                 String fotoName = probabilidad + UUID.randomUUID().toString() + ".png";
                 String path = carpeta + "/" + fotoName;
                 FileOutputStream foto = new FileOutputStream(new File(path));
@@ -135,6 +157,7 @@ public class MostrarResultados extends AppCompatActivity {
         AlertDialog dialog=mBuilder.create();
         dialog.show();
     }
+
 
 
     public final void notifyMediaStoreScanner(final File file) {
