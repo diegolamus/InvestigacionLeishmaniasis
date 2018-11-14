@@ -6,35 +6,37 @@
     android:background="@color/colorPrimary"
     tools:context=".Instruccion2">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="526dp"
-            android:background="@drawable/dos" />
+        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="3dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical">
 
-            <TextView
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text=" © 2018 LeishApp. Todos los
-   derechos reservados."
-                android:textAlignment="center"
-                android:textColor="@color/secondaryText"
-                android:textSize="15sp" />
+                android:layout_height="498dp"
+                android:background="@drawable/dos" />
+
+
         </LinearLayout>
-    </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text=" © 2018 LeishApp. Todos los derechos reservados."
+            android:gravity="center"
+            android:textColor="@color/secondaryText"
+            android:layout_alignParentBottom="true"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+    </ScrollView>
 
 </FrameLayout>

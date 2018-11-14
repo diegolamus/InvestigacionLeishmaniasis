@@ -6,34 +6,40 @@
     android:background="@color/colorPrimary"
     tools:context=".Instruccion4">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="520dp"
-            android:background="@drawable/cuatro" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="3dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical">
 
-            <TextView
+
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text=" © 2018 LeishApp. Todos los
-      derechos reservados."
-                android:textAlignment="center"
-                android:textColor="@color/secondaryText"
-                android:textSize="15sp" />
+                android:layout_height="498dp"
+                android:background="@drawable/cuatro" />
         </LinearLayout>
-    </LinearLayout>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text=" © 2018 LeishApp. Todos los derechos reservados."
+            android:gravity="center"
+            android:textColor="@color/secondaryText"
+            android:layout_alignParentBottom="true"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+</ScrollView>
+
+
 </FrameLayout>

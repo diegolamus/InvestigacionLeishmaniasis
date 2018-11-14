@@ -10,8 +10,13 @@ import android.view.View;
 public class ProcesamientoImagen
 {
     public static Bitmap recortarImagen(Bitmap image, int startX, int startY, int width, int height){
-        Bitmap salida = Bitmap.createBitmap(image, startX,startY,width,height);
-        return salida;
+        try {
+            Bitmap salida = Bitmap.createBitmap(image, startX, startY, width, height);
+            return salida;
+            // androids falla por dimenciones de camara no compatible con view de recorte
+        }catch (IllegalArgumentException ex){
+            return image;
+        }
     }
 
     public static Bitmap rotarImage(Bitmap source, float angle) {

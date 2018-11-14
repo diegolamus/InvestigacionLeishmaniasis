@@ -65,7 +65,7 @@ public class Instrucciones extends AppCompatActivity implements Instruccion2.OnF
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_instruciones2, menu);
+        //getMenuInflater().inflate(R.menu.menu_instruciones2, menu);
         return true;
     }
 
