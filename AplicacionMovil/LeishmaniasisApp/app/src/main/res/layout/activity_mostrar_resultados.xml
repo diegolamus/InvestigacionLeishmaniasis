@@ -75,8 +75,8 @@
             android:layout_marginEnd="6dp"
             android:layout_marginStart="6dp"
             android:layout_weight="1"
-            android:background="#B2EBF2"
-            android:onClick="onClick_Guardar"
+            android:background="@drawable/roundedbutton"
+            android:onClick="onClick_Aceptar"
             android:text="GUARDAR" />
 
     </LinearLayout>

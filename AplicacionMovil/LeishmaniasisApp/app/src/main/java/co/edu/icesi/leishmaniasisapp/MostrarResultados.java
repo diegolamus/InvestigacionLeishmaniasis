@@ -92,23 +92,6 @@ public class MostrarResultados extends AppCompatActivity {
     }
 
 
-    // Permisions callback
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case INTERNET_REQUEST: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    cargarActividad();
-                } else {
-                    // permission denied, return
-                    onBackPressed();
-                }
-                return;
-            }
-        }
-    }
-
     //pide el nombre de la imagen
     public void onClick_Aceptar(View v){
 
@@ -170,6 +153,24 @@ public class MostrarResultados extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    // Permisions callback
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case INTERNET_REQUEST: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    cargarActividad();
+                } else {
+                    // permission denied, return
+                    onBackPressed();
+                }
+                return;
+            }
+        }
+    }
+
+
 
 }
 
