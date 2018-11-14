@@ -51,7 +51,7 @@ public class TomarFoto extends AppCompatActivity {
         flash = findViewById(R.id.flash);
         flashEncendido=false;
         areaRecorte = findViewById(R.id.areaRecorte);
-        // Ask for camera permision
+        // Pedir permisos de camara
         // Check if permisions are granted
         int checkPermisos = ContextCompat.checkSelfPermission(TomarFoto.this, Manifest.permission.CAMERA);
         // if permision is not granted we should ask for it
@@ -61,7 +61,6 @@ public class TomarFoto extends AppCompatActivity {
                     CAMERA_REQUEST);
         } else
             startCamera();
-
     }
 
     // Permisions callback

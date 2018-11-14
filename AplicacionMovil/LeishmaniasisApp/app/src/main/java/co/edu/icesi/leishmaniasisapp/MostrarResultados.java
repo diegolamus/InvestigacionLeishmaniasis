@@ -1,7 +1,9 @@
 package co.edu.icesi.leishmaniasisapp;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,6 +15,8 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +41,8 @@ import co.edu.icesi.modelo.ProcesamientoImagen;
 
 public class MostrarResultados extends AppCompatActivity {
 
+    private static final int INTERNET_REQUEST = 108;
+
     ImageView fotoDisplay;
     Bitmap img;
     TextView textoProbabilidad;
@@ -48,7 +54,20 @@ public class MostrarResultados extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostrar_resultados);
+        // Pedir permisos de camara
+        // Check if permisions are granted
+        int checkPermisos = ContextCompat.checkSelfPermission(MostrarResultados.this, Manifest.permission.INTERNET);
+        // if permision is not granted we should ask for it
+        if(checkPermisos != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(MostrarResultados.this,
+                    new String[]{Manifest.permission.INTERNET},
+                    INTERNET_REQUEST);
+        } else {
+            cargarActividad();
+        }
+    }
 
+    private void cargarActividad(){
         nameCarpeta = "leishApp";
         carpeta = new File(Environment.getExternalStorageDirectory().toString() + "/" + nameCarpeta);
         if (!carpeta.exists()) carpeta.mkdirs();
@@ -57,7 +76,7 @@ public class MostrarResultados extends AppCompatActivity {
         if (getIntent().getStringExtra("actividad").equals("tomarfoto"))
             img = TomarFoto.img;
         else
-            img = GalleryPreview.recuperaImagen; //TODO recuperar foto de SeleccionarFoto
+            img = GalleryPreview.recuperaImagen;
         //Desplegar la foto en pantalla
         fotoDisplay = findViewById(R.id.fotoDisplay);
         fotoDisplay.setImageBitmap(img);
@@ -70,6 +89,22 @@ public class MostrarResultados extends AppCompatActivity {
         textoProbabilidad.setText("" + Math.round(probabilidad * 100) / 100.0 + "%");
     }
 
+    // Permisions callback
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case INTERNET_REQUEST: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    cargarActividad();
+                } else {
+                    // permission denied, return
+                    onBackPressed();
+                }
+                return;
+            }
+        }
+    }
 
     //Guadar foto
     public void onClick_Guardar(View v) {
