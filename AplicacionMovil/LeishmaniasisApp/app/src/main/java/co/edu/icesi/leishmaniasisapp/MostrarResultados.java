@@ -49,13 +49,19 @@ public class MostrarResultados extends AppCompatActivity {
     TextView textoProbabilidad;
     String nameCarpeta; //nombre del directorio
     File carpeta;
-    EditText ed_nombreImg;
+    EditText ed_textNombre;
+    EditText ed_textNumLesion;
+    String nombre="";
+    String numero="";
     double probabilidad=0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostrar_resultados);
+
+
+
         // Pedir permisos de camara
         // Check if permisions are granted
         int checkPermisos = ContextCompat.checkSelfPermission(MostrarResultados.this, Manifest.permission.INTERNET);
@@ -73,7 +79,6 @@ public class MostrarResultados extends AppCompatActivity {
         nameCarpeta = "leishApp";
         carpeta = new File(Environment.getExternalStorageDirectory().toString() + "/" + nameCarpeta);
         if (!carpeta.exists()) carpeta.mkdirs();
-
         //Obtener la foto de la actividad anterior
         if (getIntent().getStringExtra("actividad").equals("tomarfoto"))
             img = TomarFoto.img;
@@ -92,35 +97,41 @@ public class MostrarResultados extends AppCompatActivity {
     }
 
 
-    //pide el nombre de la imagen
-    public void onClick_Aceptar(View v){
+    //pide informacion para guardar la imagen
+    public void onClick_Guardar(View v){
 
         AlertDialog.Builder informacion= new AlertDialog.Builder(MostrarResultados.this);
-        View aView=getLayoutInflater().inflate(R.layout.activity_alert,null);
-        ed_nombreImg = findViewById(R.id.ed_text);
-        Button btn_aceptar=aView.findViewById(R.id.btn_aceptar);
+        View dialog=getLayoutInflater().inflate(R.layout.activity_alert,null);
+        Button btn_aceptar=dialog.findViewById(R.id.btn_aceptar);
+        ed_textNombre=dialog.findViewById(R.id.ed_textNombre);
+        ed_textNumLesion=dialog.findViewById(R.id.ed_textNumLesion);
         btn_aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClick_Guardar(v);
+                nombre = ed_textNombre.getText().toString();
+                numero = ed_textNumLesion.getText().toString();
+                if(nombre.isEmpty() || numero.isEmpty()){
+                    Toast.makeText(MostrarResultados.this, "Debe ingresar la información requeridad", Toast.LENGTH_LONG).show();
+                }else{
+                    onClick_Aceptar(v);
+                }
+
             }
         });
-        informacion.setView(aView);
-        AlertDialog dialog=informacion.create();
-        dialog.show();
+        informacion.setView(dialog);
+        AlertDialog alertDialog=informacion.create();
+        alertDialog.show();
     }
 
     //Guadar foto
-    public void onClick_Guardar(View v) {
+    public void onClick_Aceptar(View v) {
         if(carpeta.exists()) {
             try {
-                // String name= ed_nombreImg.getText().toString();
-                String fotoName = probabilidad + UUID.randomUUID().toString() + ".png";
+                String fotoName = nombre+"-"+numero+"-"+ Math.round(probabilidad * 100)/ 100.0 + "%" +"-"+UUID.randomUUID().toString() + ".png";
                 String path = carpeta + "/" + fotoName;
                 FileOutputStream foto = new FileOutputStream(new File(path));
                 img.compress(Bitmap.CompressFormat.PNG, 100, foto);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
-                Toast.makeText(MostrarResultados.this, "Imagen guardada", Toast.LENGTH_SHORT).show();
                 notifyMediaStoreScanner(new File(path));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -137,8 +148,8 @@ public class MostrarResultados extends AppCompatActivity {
             }
         });
         mBuilder.setView(mView);
-        AlertDialog dialog=mBuilder.create();
-        dialog.show();
+        AlertDialog alDialog=mBuilder.create();
+        alDialog.show();
     }
 
 
