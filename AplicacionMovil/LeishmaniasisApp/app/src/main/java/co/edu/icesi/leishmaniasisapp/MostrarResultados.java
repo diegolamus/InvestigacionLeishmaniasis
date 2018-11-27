@@ -2,6 +2,7 @@ package co.edu.icesi.leishmaniasisapp;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -23,6 +24,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,7 +41,7 @@ import java.util.UUID;
 
 import co.edu.icesi.modelo.ProcesamientoImagen;
 
-public class MostrarResultados extends AppCompatActivity {
+public class MostrarResultados extends AppCompatActivity implements View.OnClickListener{
 
     private static final int INTERNET_REQUEST = 108;
 
@@ -49,6 +51,10 @@ public class MostrarResultados extends AppCompatActivity {
     String nameCarpeta; //nombre del directorio
     File carpeta;
     double probabilidad=0.0;
+    EditText ed_textNombre;
+    EditText ed_textNumLesion;
+    String nombre="";
+    String numero="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,34 +112,63 @@ public class MostrarResultados extends AppCompatActivity {
         }
     }
 
+
+    //Retornar a inicio
+    public void onClick_Inicio(View v){
+        onBackPressed();
+    }
+
+    //pide informacion para guardar la imagen
+    public void onClick_Guardar(View v){
+
+        AlertDialog.Builder informacion= new AlertDialog.Builder(MostrarResultados.this);
+        View dialog=getLayoutInflater().inflate(R.layout.activity_alert,null);
+        Button btn_aceptar=dialog.findViewById(R.id.btn_aceptar);
+        ed_textNombre=dialog.findViewById(R.id.ed_textNombre);
+        ed_textNumLesion=dialog.findViewById(R.id.ed_textNumLesion);
+        btn_aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nombre = ed_textNombre.getText().toString();
+                numero = ed_textNumLesion.getText().toString();
+                if(nombre.isEmpty() || numero.isEmpty()){
+                    Toast.makeText(MostrarResultados.this, "Debe ingresar la información requeridad", Toast.LENGTH_LONG).show();
+                }else{
+                    onClick_Aceptar(v);
+                }
+
+            }
+        });
+        informacion.setView(dialog);
+        AlertDialog alertDialog=informacion.create();
+        alertDialog.show();
+    }
+
     //Guadar foto
-    public void onClick_Guardar(View v) {
+    public void onClick_Aceptar(View v) {
         if(carpeta.exists()) {
             try {
-                String fotoName = probabilidad + UUID.randomUUID().toString() + ".png";
+                String fotoName = nombre+"-"+numero+"-"+ Math.round(probabilidad * 100)/ 100.0 + "%" +"-"+UUID.randomUUID().toString() + ".png";
                 String path = carpeta + "/" + fotoName;
                 FileOutputStream foto = new FileOutputStream(new File(path));
                 img.compress(Bitmap.CompressFormat.PNG, 100, foto);
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
-                Toast.makeText(MostrarResultados.this, "Imagen guardada", Toast.LENGTH_SHORT).show();
                 notifyMediaStoreScanner(new File(path));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MostrarResultados.this);
         View mView=getLayoutInflater().inflate(R.layout.activity_alert_dialog,null);
         Button btn_inicio= mView.findViewById(R.id.btn_inicio);
-        btn_inicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        btn_inicio.setOnClickListener(this);
+
         mBuilder.setView(mView);
-        AlertDialog dialog=mBuilder.create();
-        dialog.show();
+        AlertDialog alDialog=mBuilder.create();
+        alDialog.show();
     }
+
 
 
     public final void notifyMediaStoreScanner(final File file) {
@@ -147,5 +182,13 @@ public class MostrarResultados extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+
+        if(v.getId()==R.id.btn_inicio){
+            onBackPressed();
+        }
+
+    }
 }
 
