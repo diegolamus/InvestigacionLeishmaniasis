@@ -6,28 +6,13 @@ import android.graphics.Matrix;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 
-import co.edu.icesi.leishmaniasisapp.MostrarResultados;
 
 
 public class ProcesamientoImagen
