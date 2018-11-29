@@ -1,18 +1,10 @@
 package co.edu.icesi.leishmaniasisapp;
 
+import android.os.AsyncTask;
 import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.Matrix;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -21,22 +13,19 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.UUID;
 
 import co.edu.icesi.modelo.ProcesamientoImagen;
@@ -89,10 +78,34 @@ public class MostrarResultados extends AppCompatActivity implements View.OnClick
         //Ajustar la barra de progreso y texto de probabilidad
         // progressBarProbabilidad = findViewById(R.id.progressBar);
         textoProbabilidad = findViewById(R.id.textoProbabilidad);
-        //Ingresar probabilidad a barra de progreso y texto
-        probabilidad = ProcesamientoImagen.obtenerProbabilidad(getApplicationContext(), img);
-        // progressBarProbabilidad.setProgress((int)probabilidad);
-        textoProbabilidad.setText("" + Math.round(probabilidad * 100) / 100.0 + "%");
+        new DownloadTask().execute("");
+    }
+
+    private class DownloadTask extends AsyncTask<String,Integer,List<String>>{
+        // Before the tasks execution
+        protected void onPreExecute(){
+            textoProbabilidad.setText("Procesando....");
+        }
+
+        // Do the task in background/non UI thread
+        protected List<String> doInBackground(String...tasks){
+            //Ingresar probabilidad en texto
+            try {
+                probabilidad = ProcesamientoImagen.obtenerProbabilidad(getApplicationContext(), img);
+                publishProgress(1);
+            } catch (Exception e) {
+                publishProgress(0);
+            }
+            return null;
+        }
+
+        // Actualiza cuando se publique progreso
+        protected void onProgressUpdate(Integer... progress) {
+            if (progress[0] == 1)
+                textoProbabilidad.setText("" + Math.round(probabilidad * 100) / 100.0 + "%");
+            else
+                textoProbabilidad.setText("Error al conectarse al servidor");
+        }
     }
 
     // Permisions callback
